@@ -73,6 +73,18 @@ app.post('/signup', (req, res) => {
     });
 })
 
+app.get('/get_budgets', (req, res) => {
+    fs.readFile('./myBudget.json', 'utf8', function readFileCallback(err, data) {
+        if (err) {
+            console.log(err);
+            callback(err);
+        } else {
+            obj = JSON.parse(data);
+            res.json(obj);
+        }
+    });
+});
+
 
 app.listen(port, () => {
     console.log(`API served at http://localhost:${port}`);

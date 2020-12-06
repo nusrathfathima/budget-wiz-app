@@ -15,5 +15,63 @@
             "username": "dany",
             "password": "123"
         }
+    ],
+    "configured_budget": [
+        {
+            "category": "Food",
+            "budget": 100,
+            "color": "#CE9415"
+        },
+        {
+            "category": "Grocery",
+            "budget": 150,
+            "color": "#500FE1"
+        },
+        {
+            "category": "Health",
+            "budget": 200,
+            "color": "#87471C"
+        },
+        {
+            "category": "Rent",
+            "budget": 500,
+            "color": "#C6DFA8"
+        },
+        {
+            "category": "Shopping",
+            "budget": 300,
+            "color": "#2A3321"
+        },
+        {
+            "category": "Movies",
+            "budget": 50,
+            "color": "#28F256"
+        },
+        {
+            "category": "Books",
+            "budget": 50,
+            "color": "#EDAE6C"
+        },
+        {
+            "category": "Travel",
+            "budget": 100,
+            "color": "#559EC8"
+        },
+        {
+            "category": "Utilities",
+            "budget": 75,
+            "color": "#2A41B9"
+        },
+        {
+            "category": "Mobile",
+            "budget": 30,
+            "color": "#249877"
+        },
+        {
+            "category": "Netflix",
+            "budget": 15,
+            "color": "#A14086"
+        }
     ]
+
 }
