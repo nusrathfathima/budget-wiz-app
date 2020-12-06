@@ -1,0 +1,19 @@
+{
+    "user_accounts": [
+        {
+            "fullname": "Nusrath Fathima",
+            "username": "nus",
+            "password": "123"
+        },
+        {
+            "fullname": "Mohammed Abdul Khadeer",
+            "username": "abdul",
+            "password": "456"
+        },
+        {
+            "fullname": "Annu Jaanu",
+            "username": "annu",
+            "password": "786"
+        }
+    ]
+}

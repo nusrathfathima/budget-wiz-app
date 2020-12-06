@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <head>Document</head> -->
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+
+
+
+<body>
+    <form>
+        <div class="login_heading">
+            <h1 type="text">Login</h1>
+        </div>
+
+        <!-- <span id="login_message"></span> -->
+
+        <div class="container">
+            <label for="username"><b>Username</b></label>
+            <input id="username" type="text" placeholder="Enter Username" name="username">
+            <br>
+
+            <label for="password"><b>Password</b></label>
+            <input id="password" type="password" placeholder="Enter Password" name="password">
+            <br>
+
+            <label></label>
+            <button type="button" onclick="login(this.form)">Login</button>
+        </div>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+        crossorigin="anonymous"></script>
+
+
+    <script>
+        function login(user) {
+            var username = user.username.value;
+            var password = user.password.value;
+
+            var data = {
+                'username': username,
+                'password': password
+            };
+
+            axios.post('http://localhost:3000/login', data)
+                .then(function (res) {
+                    if (res.data.login_status) {
+                        // document.getElementById("login_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
+
+                        document.getElementById("username").value = "";
+                        document.getElementById("password").value = "";
+
+                        window.history.replaceState("", 'Dashboard', './dashboard.html');
+                        $(".indexPage").hide();
+                        $(".dashboardPage").show();
+                        document.title = 'Dashboard';
+                        // $('.userDropdown').show();
+                    }
+                    else {
+                        alert("Incorrect Username or Password!!!");
+                    }
+                })
+        };
+    </script>
+
+
+</body>
+
+
+</html>
