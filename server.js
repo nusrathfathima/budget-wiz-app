@@ -33,6 +33,46 @@ app.post('/login', (req, res) => {
     });
 })
 
+app.post('/signup', (req, res) => {
+    const { fullname, username, password } = req.body;
+    fs.readFile('./myBudget.json', 'utf8', function readFileCallback(err, data) {
+        if (err) {
+            console.log(err);
+            callback(err);
+        } else {
+            signup_status = true;
+
+            user_profile = {
+                "fullname": fullname,
+                "username": username,
+                "password": password
+            };
+
+            obj = JSON.parse(data);
+            user_accounts = obj.user_accounts;
+            for (var i=0; i < user_accounts.length; i++) {
+                if (user_accounts[i].username == username) {
+                    signup_status = false;
+                    break;
+                }
+            }
+
+            if (signup_status) {
+                obj.user_accounts.push(user_profile);
+
+                json = JSON.stringify(obj);
+                fs.writeFile('./myBudget.json', json, 'utf8', function (err, result) {
+                    if (err) console.log('error', err);
+                });    
+            }
+
+            res.json({
+                "signup_status": signup_status
+            });
+        }
+    });
+})
+
 
 app.listen(port, () => {
     console.log(`API served at http://localhost:${port}`);
