@@ -1,0 +1,124 @@
+.appBanner {
+    background-color: #2E5984;
+    height: 50px;
+}
+
+.appName {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    height: 40px;
+    padding: 40px;
+    /* text-align: left; */
+    text-size-adjust: 50px;
+}
+
+.userDropdown {
+    background-color: #BCD2E8 ;
+}
+
+.userButton {
+    font-weight: bold;
+    color: goldenrod;    
+    height: 50px;
+}
+
+.barChart, .lineChart {
+    width: 50%;
+    display: inline-block;
+}
+
+.pieChart {
+    align-items: center;
+    width: 70%; 
+    margin: 0 auto;
+}
+
+#chartTitle {
+    text-align: center;
+}
+
+#budgetTable, #expenseTable {
+    width:50%;
+}
+
+form {
+    border: 3px solid #f1f1f1;
+    background-color: #BCD2E8;
+}
+
+input {
+    border-color: black;
+    /* border-radius: 100px; */
+    border-width: 2px;
+}
+
+input[type=text],
+input[type=password] {
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+label {
+    display: inline-block;
+    width: 200px;
+    margin-right: 30px;
+    text-align: right;
+}
+
+button {
+    background-color: #2E5984;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    /* width: 40%; */
+}
+
+button:hover {
+    opacity: 0.8;
+    background-color: #2E5984;
+}
+
+.container {
+    padding: 16px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td {
+    text-align: center;
+}
+
+#heading {
+    background-color: #2E5984; 
+    color: white;
+}
+
+.center {
+    text-align: center;
+    color: white;
+}
+
+.bottom {
+    height: 50px;
+    background-color:#2E5984 ;
+    padding: 40px;
+}

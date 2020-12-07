@@ -29,7 +29,7 @@
         </div>
         <br>
         <div>
-            <table id="expense_table" style="width:50%" hidden>
+            <table id="expenseTable" hidden>
                 <tr>
                     <th>
                         Category
@@ -51,7 +51,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
         integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
         crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         function get_expenses() {
             axios.get('http://localhost:3000/get_budgets')
@@ -59,7 +58,7 @@
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
                         var budget = res.data.configured_budget[i].budget;
-                        document.getElementById("expense_table").innerHTML +=
+                        document.getElementById("expenseTable").innerHTML +=
                             "<tr>" +
                             "<td>" +
                             category +
@@ -111,10 +110,10 @@
                     var month = m[m.selectedIndex].value;
                     var month_id = m[m.selectedIndex].id;
                     if (month_id > 0) {
-                        document.getElementById("expense_table").hidden = false;
+                        document.getElementById("expenseTable").hidden = false;
                     }
                     else {
-                        document.getElementById("expense_table").hidden = true;
+                        document.getElementById("expenseTable").hidden = true;
                     }
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;

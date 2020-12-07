@@ -11,9 +11,9 @@
             "password": "456"
         },
         {
-            "fullname": "Daniya",
-            "username": "dany",
-            "password": "123"
+            "fullname": "Annu Jaanu",
+            "username": "annu",
+            "password": "786"
         }
     ],
     "configured_budget": [
@@ -596,6 +596,52 @@
             {
                 "category": "Netflix",
                 "expense": 10
+            }
+        ],
+        "Select Month": [
+            {
+                "category": "Food",
+                "expense": 0
+            },
+            {
+                "category": "Grocery",
+                "expense": 0
+            },
+            {
+                "category": "Health",
+                "expense": 0
+            },
+            {
+                "category": "Rent",
+                "expense": 0
+            },
+            {
+                "category": "Shopping",
+                "expense": 0
+            },
+            {
+                "category": "Movies",
+                "expense": 0
+            },
+            {
+                "category": "Books",
+                "expense": 0
+            },
+            {
+                "category": "Travel",
+                "expense": 0
+            },
+            {
+                "category": "Utilities",
+                "expense": 0
+            },
+            {
+                "category": "Mobile",
+                "expense": 0
+            },
+            {
+                "category": "Netflix",
+                "expense": 0
             }
         ]
     }

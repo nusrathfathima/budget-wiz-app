@@ -3,161 +3,161 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-    <h1 style="text-align: center;">Categorical Expense</h1>
-    <div>
-        <label for="categories">Select Category:</label>
-        <select id="categories" name="categories" onchange="load_line_expenses(this)" autocomplete="off">
-            <option id=0 value="Select Category">Select Category</option>
-        </select>
-    </div>
-    <br>
+	<h1 id="chartTitle">Categorical Expense</h1>
+	<div>
+		<label for="categories">Select Category:</label>
+		<select id="categories" name="categories" onchange="load_line_expenses(this)" autocomplete="off">
+			<option id=0 value="Select Category">Select Category</option>
+		</select>
+	</div>
+	<br>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <canvas id="myLineChart"></canvas>
-            </div>
-            <div class="col-md-1"></div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<canvas id="myLineChart"></canvas>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
-        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
-        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
-        crossorigin="anonymous"></script>
-    <script type="text/javascript" src="jscript/graph.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+		integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+		integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript" src="jscript/graph.js"></script>
 
-    <script>
-        // Global Options:
-        Chart.defaults.global.defaultFontColor = 'black';
-        Chart.defaults.global.defaultFontSize = 16;
+	<script>
+		// Global Options:
+		Chart.defaults.global.defaultFontColor = 'black';
+		Chart.defaults.global.defaultFontSize = 16;
 
-        var lineChartData = {
-            labels: [
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December"
-            ],
-            datasets: [{
-                label: "Configured Budget",
-                lineTension: 0,
-                borderColor: "#e75480",
-                backgroundColor: "pink",
-                pointBackgroundColor: "white",
-                pointRadius: 4,
-                data: [],
-                spanGaps: true,
-                fill: false,
-            }, {
-                label: "Monthly Expense",
-                lineTension: 0,
-                pointBackgroundColor: "white",
-                pointRadius: 4,
-                data: [],
-                spanGaps: true,
-                fill: false,
-            }
-            ]
-        };
+		var lineChartData = {
+			labels: [
+				"January",
+				"February",
+				"March",
+				"April",
+				"May",
+				"June",
+				"July",
+				"August",
+				"September",
+				"October",
+				"November",
+				"December"
+			],
+			datasets: [{
+				label: "Configured Budget",
+				lineTension: 0,
+				borderColor: "#e75480",
+				backgroundColor: "pink",
+				pointBackgroundColor: "white",
+				pointRadius: 4,
+				data: [],
+				spanGaps: true,
+				fill: false,
+			}, {
+				label: "Monthly Expense",
+				lineTension: 0,
+				pointBackgroundColor: "white",
+				pointRadius: 4,
+				data: [],
+				spanGaps: true,
+				fill: false,
+			}
+			]
+		};
 
-        var options = {
-            responsive: true,
-            legend: {
-                position: "bottom"
-            },
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Month',
-                        fontSize: 20
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Budget / Expense',
-                        fontSize: 20
-                    }
-                }]
-            }
-        };
+		var options = {
+			responsive: true,
+			legend: {
+				position: "bottom"
+			},
+			scales: {
+				xAxes: [{
+					scaleLabel: {
+						display: true,
+						labelString: 'Month',
+						fontSize: 20
+					}
+				}],
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					},
+					scaleLabel: {
+						display: true,
+						labelString: 'Budget / Expense',
+						fontSize: 20
+					}
+				}]
+			}
+		};
 
-        var lineChart;
-        function createLineChart() {
-            if (lineChart) {
-                lineChart.destroy();
-            }
-            var ctx = document.getElementById("myLineChart").getContext("2d");
-            lineChart = new Chart(ctx, {
-                type: 'line',
-                data: lineChartData,
-                options: options
-            });
-        }
+		var lineChart;
+		function createLineChart() {
+			if (lineChart) {
+				lineChart.destroy();
+			}
+			var ctx = document.getElementById("myLineChart").getContext("2d");
+			lineChart = new Chart(ctx, {
+				type: 'line',
+				data: lineChartData,
+				options: options
+			});
+		}
 
-        function drawLine() {
-            axios.get('http://localhost:3000/get_budgets')
-                .then(function (res) {
-                    for (var i = 0; i < res.data.configured_budget.length; i++) {
-                        var category = res.data.configured_budget[i].category;
-                        document.getElementById("categories").innerHTML +=
-                            "<option id=" + (i + 1) + " value='" + category + "'>" + category + "</option>";
-                    }
-                    createLineChart();
-                });
-        }
-        drawLine();
+		function drawLine() {
+			axios.get('http://localhost:3000/get_budgets')
+				.then(function (res) {
+					for (var i = 0; i < res.data.configured_budget.length; i++) {
+						var category = res.data.configured_budget[i].category;
+						document.getElementById("categories").innerHTML +=
+							"<option id=" + (i + 1) + " value='" + category + "'>" + category + "</option>";
+					}
+					createLineChart();
+				});
+		}
+		drawLine();
 
-        function load_line_expenses(m) {
-            axios.get('http://localhost:3000/get_budgets')
-                .then(function (res) {
-                    lineChartData.datasets[0].data = [];
-                    lineChartData.datasets[1].data = [];
-                    var category = m[m.selectedIndex].value;
-                    var id = parseInt(m[m.selectedIndex].id) - 1;
+		function load_line_expenses(m) {
+			axios.get('http://localhost:3000/get_budgets')
+				.then(function (res) {
+					lineChartData.datasets[0].data = [];
+					lineChartData.datasets[1].data = [];
+					var category = m[m.selectedIndex].value;
+					var id = parseInt(m[m.selectedIndex].id) - 1;
 
-                    if (id >= 0) {
-                        var budget = res.data.configured_budget[id].budget;
-                        var color = res.data.configured_budget[id].color;
-                        lineChartData.datasets[1].borderColor = color;
-                        var month;
-                        var expense;
-                        for (var i = 0; i < 12; i++) {
-                            month = lineChartData.labels[i];
-                            expense = 0;
-                            try {
-                                expense = res.data.monthly_expenses[month][id].expense;
-                            }
-                            catch (err) {
-                            }
-                            lineChartData.datasets[0].data.push(budget);
-                            lineChartData.datasets[1].data.push(expense);
-                        }
-                    }
-                    createLineChart();
-                });
-        }
-    </script>
+					if (id >= 0) {
+						var budget = res.data.configured_budget[id].budget;
+						var color = res.data.configured_budget[id].color;
+						lineChartData.datasets[1].borderColor = color;
+						var month;
+						var expense;
+						for (var i = 0; i < 12; i++) {
+							month = lineChartData.labels[i];
+							expense = 0;
+							try {
+								expense = res.data.monthly_expenses[month][id].expense;
+							}
+							catch (err) {
+							}
+							lineChartData.datasets[0].data.push(budget);
+							lineChartData.datasets[1].data.push(expense);
+						}
+					}
+					createLineChart();
+				});
+		}
+	</script>
 </body>
 
 </html>

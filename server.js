@@ -1,3 +1,4 @@
+//Budget API
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -72,6 +73,7 @@ app.post('/signup', (req, res) => {
         }
     });
 })
+
 
 app.get('/get_budgets', (req, res) => {
     fs.readFile('./myBudget.json', 'utf8', function readFileCallback(err, data) {
@@ -153,6 +155,31 @@ app.post('/add_expenses', (req, res) => {
 
 })
 
+// app.post('/delete_budget', (req, res) => {
+//     const {category, budget} = req.body;
+//     console.log(category);
+//     console.log(budget);
+//     fs.readFile('./myBudget.json', 'utf8', function readFileCallback(err, data){
+//         if (err){
+//             console.log(err);
+//             callback(err);
+//         } else {
+//         obj = JSON.parse(data);
+//         var index = obj.configured_budget.indexOf(
+//             {
+//                 "category": category, 
+//                 "budget": parseInt(budget)
+//             });
+//         if (index > -1) {
+//             obj.configured_budget.splice(index, 1);
+//         }
+//         json = JSON.stringify(obj);
+//         fs.writeFile('./myBudget.json', json, 'utf8', function(err, result) {
+//             if(err) console.log('error', err);
+//           });
+//     }});
+
+// })
 
 app.listen(port, () => {
     console.log(`API served at http://localhost:${port}`);

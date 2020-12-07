@@ -1,15 +1,65 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+        crossorigin="anonymous"></script>
 </head>
 
+<script>
+    function signup(user) {
+        var fullname = user.fullname.value;
+        var username = user.username.value;
+        var password = user.password.value;
+        var confirm_password = user.confirm_password.value;
+
+        if (!fullname) {
+            alert("Please Enter Full Name");
+        }
+        else if (!username) {
+            alert("Please Enter Valid Username");
+        }
+        else if (!password) {
+            alert("Please Enter Valid Password");
+        }
+        else if (password != confirm_password) {
+            alert("Passwords Don't Match!!!");
+        }
+        else {
+            var data = {
+                'fullname': fullname,
+                'username': username,
+                'password': password
+            }
+
+            axios.post('http://localhost:3000/signup', data)
+                .then(function (res) {
+                    if (res.data.signup_status) {
+                        // document.getElementById("signup_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
+                        document.getElementById("fullname").value = "";
+                        document.getElementById("username").value = "";
+                        document.getElementById("password").value = "";
+                        document.getElementById("confirm_password").value = "";
+
+                        window.history.replaceState("", 'Dashboard', './dashboard.html');
+                        document.title = 'Dashboard';
+                        $(".homeContent").hide();
+                        $(".dashboardContent").show();
+                        $('.userDropdown').show();
+                    }
+                    else {
+                        alert("Username Already Exists!!!");
+                    }
+                })
+        }
+    };
+</script>
 
 <body>
-
     <form>
         <div>
             <h1 type="text">Sign Up</h1>
@@ -19,75 +69,23 @@
 
         <div class="container">
             <label for="fullname"><b>Full Name</b></label>
-            <input type="text" placeholder="Enter Full Name" name="fullname" size="20" required>
+            <input id="fullname" type="text" placeholder="Enter Full Name" name="fullname" size="20">
             <br>
             <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
+            <input id="username" type="text" placeholder="Enter Username" name="username">
             <br>
 
             <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
+            <input id="password" type="password" placeholder="Enter Password" name="password">
             <br>
             <label for="confirm_password"><b>Confirm Password</b></label>
-            <input type="password" placeholder="Enter Password Again" name="confirm_password" required>
+            <input id="confirm_password" type="password" placeholder="Enter Password Again" name="confirm_password">
             <br>
 
             <label></label>
             <button type="button" onclick="signup(this.form)">Sign Up</button>
         </div>
     </form>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
-        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
-        crossorigin="anonymous"></script>
-
-
-    <script>
-        function signup(user) {
-            var fullname = user.fullname.value;
-            var username = user.username.value;
-            var password = user.password.value;
-            var confirm_password = user.confirm_password.value;
-
-            if (!fullname) {
-                alert("Please Enter Full Name");
-            }
-            else if (!username) {
-                alert("Please Enter Valid Username");
-            }
-            else if (!password) {
-                alert("Please Enter Valid Password");
-            }
-            else if (password != confirm_password) {
-                alert("Passwords Don't Match!!!");
-            }
-            else {
-                var data = {
-                    'fullname': fullname,
-                    'username': username,
-                    'password': password
-                }
-
-                axios.post('http://localhost:3000/signup', data)
-                    .then(function (res) {
-                        if (res.data.signup_status) {
-                            // document.getElementById("signup_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
-                            window.history.replaceState("", 'Dashboard', './dashboard.html');
-                            $(".indexPage").hide();
-                            $(".dashboardPage").show();
-                            // $('#user_dropdown').show();
-                            document.title = 'Dashboard';
-                        }
-                        else {
-                            alert("Username Already Exists!!!");
-                        }
-                    })
-            }
-        };
-    </script>
 
 </body>
 
