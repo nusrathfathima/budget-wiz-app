@@ -134,6 +134,25 @@ app.post('/update_budgets', (req, res) => {
 
 })
 
+app.post('/add_expenses', (req, res) => {
+    const { month, expense_array } = req.body;
+    fs.readFile('./myBudget.json', 'utf8', function readFileCallback(err, data) {
+        if (err) {
+            console.log(err);
+            callback(err);
+        } else {
+            obj = JSON.parse(data);
+            obj.monthly_expenses[month] = expense_array;
+            
+            json = JSON.stringify(obj);
+            fs.writeFile('./myBudget.json', json, 'utf8', function (err, result) {
+                if (err) console.log('error', err);
+            });
+        }
+    });
+
+})
+
 
 app.listen(port, () => {
     console.log(`API served at http://localhost:${port}`);

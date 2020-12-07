@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <h1 id="heading">Monthly Expense</h1>
+    <form>
+        <div>
+            <label for="months">Select Month:</label>
+            <select id="months" name="months" onchange="load_expenses(this)" autocomplete="off">
+                <option id=0 value="Select Month">Select Month</option>
+                <option id=1 value="January">January</option>
+                <option id=2 value="February">February</option>
+                <option id=3 value="March">March</option>
+                <option id=4 value="April">April</option>
+                <option id=5 value="May">May</option>
+                <option id=6 value="June">June</option>
+                <option id=7 value="July">July</option>
+                <option id=8 value="August">August</option>
+                <option id=9 value="September">September</option>
+                <option id=10 value="October">October</option>
+                <option id=11 value="November">November</option>
+                <option id=12 value="December">December</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <table id="expense_table" style="width:50%" hidden>
+                <tr>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Budget
+                    </th>
+                    <th>
+                        Expense
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div>
+            <button class="button" type="button" onclick="submit_expenses(this.form)">Submit</button>
+        </div>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function get_expenses() {
+            axios.get('http://localhost:3000/get_budgets')
+                .then(function (res) {
+                    for (var i = 0; i < res.data.configured_budget.length; i++) {
+                        var category = res.data.configured_budget[i].category;
+                        var budget = res.data.configured_budget[i].budget;
+                        document.getElementById("expense_table").innerHTML +=
+                            "<tr>" +
+                            "<td>" +
+                            category +
+                            "</td>" +
+                            "<td>" +
+                            budget +
+                            "</td>" +
+                            "<td>" +
+                            "<input id='expense' type='number' placeholder='Enter Expense' name='" + category + "'>" +
+                            "</td>" +
+                            "</tr>";
+                    }
+                });
+
+        }
+        get_expenses();
+
+        function submit_expenses(expense_data) {
+            var month = expense_data.months.value;
+            var expense_array = [];
+
+            axios.get('http://localhost:3000/get_budgets')
+                .then(function (res) {
+                    for (var i = 0; i < res.data.configured_budget.length; i++) {
+                        var category = res.data.configured_budget[i].category;
+                        expense = parseInt(expense_data[category].value);
+                        expense = expense ? expense : 0;
+                        expense_array.push(
+                            {
+                                "category": category,
+                                "expense": expense
+                            })
+                    }
+                    const data = {
+                        'month': month,
+                        'expense_array': expense_array
+                    }
+                    axios.post('http://localhost:3000/add_expenses', data)
+                        .then(res => {
+                            console.log(res);
+                        });
+                });
+            console.log(expense_array);
+        }
+
+        function load_expenses(m) {
+            axios.get('http://localhost:3000/get_budgets')
+                .then(function (res) {
+                    var month = m[m.selectedIndex].value;
+                    var month_id = m[m.selectedIndex].id;
+                    if (month_id > 0) {
+                        document.getElementById("expense_table").hidden = false;
+                    }
+                    else {
+                        document.getElementById("expense_table").hidden = true;
+                    }
+                    for (var i = 0; i < res.data.configured_budget.length; i++) {
+                        var category = res.data.configured_budget[i].category;
+                        var expense = null;
+                        try {
+                            expense = res.data.monthly_expenses[month][i].expense;
+                        }
+                        catch (err) {
+                        }
+
+                        document.getElementsByName(category)[0].value = expense;
+                    }
+                });
+        }
+
+    </script>
+
+</body>
+
+</html>
