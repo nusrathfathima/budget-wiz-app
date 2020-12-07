@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title class="pageTitle">Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="jscript/graph.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="appBanner">
+        <a class="appName">Budget Wiz</a>
+        <div class="w3-dropdown-hover w3-right userDropdown">
+            <button class="w3-button w3-#BCD2E8 userButton">
+                Welcome, USER!
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="w3-dropdown-content w3-bar-block w3-border">
+                <a href="#" class="w3-bar-item w3-button">My Profile</a>
+                <a href="./configure_budget.html" class="w3-bar-item w3-button">Configure Budget</a>
+                <a onclick="logout()" class="w3-bar-item w3-button">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="homeContent">
+        <div class="loginForm"></div>
+        <br>
+        <div class="signupForm"></div>
+    </div>
+
+    <div class="dashboardContent">
+        <div class="pieChart"></div>
+
+        <div class="barChart"></div>
+        <div class="lineChart"></div>
+
+        <div class="monthlyExpense"></div>
+
+        <div class="configureBudget"></div>
+    </div>
+
+    <footer class="bottom">
+        <section class="center">
+            All rights reserved &copy; Nusrath Fathima
+        </section>
+    </footer>
+
+    <script>
+        $(function () {
+            $(".loginForm").load("login.html");
+            $(".signupForm").load("signup.html");
+            $(".pieChart").load("pie.html");
+            $(".barChart").load("bar.html");
+            $(".lineChart").load("line.html");
+            $(".monthlyExpense").load("monthly_expense.html");
+            $(".configureBudget").load("configure_budget.html");
+        });
+
+        function logout() {
+            window.history.replaceState("", 'Home', './index.html');
+            document.title = 'Home';
+            $('.homeContent').show();
+            $('.dashboardContent').hide();
+            $('.userDropdown').hide();
+        };
+
+    </script>
+</body>
