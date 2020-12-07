@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Document</title> -->
+</head>
+
+
+<body>
+
+    <h1 style="text-align: center;">Monthly Expense</h1>
+	<div>
+		<label for="months">Select Month:</label>
+		<select id="months" name="months" onchange="load_bar_expenses(this)" autocomplete="off">
+			<option id=0 value="Select Month">Select Month</option>
+			<option id=1 value="January">January</option>
+			<option id=2 value="February">February</option>
+			<option id=3 value="March">March</option>
+			<option id=4 value="April">April</option>
+			<option id=5 value="May">May</option>
+			<option id=6 value="June">June</option>
+			<option id=7 value="July">July</option>
+			<option id=8 value="August">August</option>
+			<option id=9 value="September">September</option>
+			<option id=10 value="October">October</option>
+			<option id=11 value="November">November</option>
+			<option id=12 value="December">December</option>
+		</select>
+	</div>
+	<br>
+
+	<div id="container">
+		<canvas id="myBarChart"></canvas>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+		integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+		integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript" src="jscript/graph.js"></script>
+
+	<script>
+		var barChartData = {
+			labels: [],
+			datasets: [
+				{
+					label: "Configured Budget",
+					backgroundColor: "pink",
+					borderColor: "red",
+					borderWidth: 1,
+					data: []
+				},
+				{
+					label: "Spent Budget",
+					backgroundColor: "lightblue",
+					borderColor: "blue",
+					borderWidth: 1,
+					data: []
+				}
+			]
+		};
+
+		var chartOptions = {
+			responsive: true,
+			legend: {
+				position: "bottom"
+			},
+			scales: {
+				xAxes: [{
+					ticks: {
+						beginAtZero: true
+					},
+					scaleLabel: {
+						display: true,
+						labelString: 'Budget',
+						fontSize: 20
+					}
+				}],
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					},
+					scaleLabel: {
+						display: true,
+						labelString: 'Categories',
+						fontSize: 20
+					}
+				}]
+			}
+		}
+
+		var barChart;
+		function createBarChart() {
+			if (barChart) {
+				barChart.destroy();
+			}
+			var ctx = document.getElementById("myBarChart").getContext("2d");
+			barChart = new Chart(ctx, {
+				type: "bar",
+				data: barChartData,
+				options: chartOptions
+			});
+		};
+
+		function drawBar() {
+			axios.get('http://localhost:3000/get_budgets')
+				.then(function (res) {
+					for (var i = 0; i < res.data.configured_budget.length; i++) {
+						var category = res.data.configured_budget[i].category;
+						var budget = res.data.configured_budget[i].budget;
+						barChartData.labels.push(category);
+					}
+					createBarChart();
+				});
+		}
+		drawBar();
+
+		function load_bar_expenses(m) {
+			axios.get('http://localhost:3000/get_budgets')
+				.then(function (res) {
+					var month = m[m.selectedIndex].value;
+					barChartData.datasets[0].data = [];
+					barChartData.datasets[1].data = [];
+					for (var i = 0; i < res.data.configured_budget.length; i++) {
+						var category = res.data.configured_budget[i].category;
+						var budget = res.data.configured_budget[i].budget;
+						var expense = 0;
+						try {
+							expense = res.data.monthly_expenses[month][i].expense;
+						}
+						catch (err) {
+						}
+						barChartData.datasets[0].data.push(budget);
+						barChartData.datasets[1].data.push(expense);
+					}
+					createBarChart();
+				});
+		}
+
+	</script>
+    
+</body>
+</html>

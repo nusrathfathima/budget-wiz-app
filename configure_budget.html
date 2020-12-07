@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <!-- <link rel="stylesheet" href="main.css"> -->
+</head>
+
+<body>
+    <h1 id="heading">Configure Budget</h1>
+    <form>
+        <div>
+            <table id="budget_table" style="width:50%">
+                <tr>
+                    <th>
+                        Category
+                    </th>
+                    <th>
+                        Budget
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <button type="button" onclick="update_budget(this.form)">Update</button>
+    </form>
+    <br>
+    <br>
+    <form>
+        <div class="container">
+            <label for="category"></label>
+            <input id="category" type="text" placeholder="Enter Category" name="category">
+            &nbsp;
+
+            <label for="budget"></label>
+            <input id="budget" type="number" placeholder="Enter Budget" name="budget">
+            <br>
+            <br>
+
+            <button type="button" onclick="add_budget(this.form)">Add</button>
+        </div>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+        crossorigin="anonymous"></script>
+    <script>
+        function get_budgets() {
+            axios.get('http://localhost:3000/get_budgets')
+                .then(function (res) {
+                    for (var i = 0; i < res.data.configured_budget.length; i++) {
+                        var category = res.data.configured_budget[i].category;
+                        var budget = res.data.configured_budget[i].budget;
+                        document.getElementById("budget_table").innerHTML +=
+                            "<tr>" +
+                            "<td>" +
+                            category +
+                            "</td>" +
+                            "<td>" +
+                            "<input type='number' placeholder='Enter Budget' name='" + category + "' value=" + budget + ">" +
+                            "</td>" +
+                            "</tr>";
+                        // "<td style=\"border: none;\"><button style=\"border-color: red;\" onclick=\"delete_budget(" + category + ", " + budget + " )\"><a style=\"color: red;\">x</a></button</td></tr>";
+                    }
+                });
+
+        }
+        get_budgets();
+
+        function add_budget(config) {
+            var category = config.category.value;
+            var budget = config.budget.value;
+            const data = {
+                "category": category,
+                "budget": budget
+            }
+            document.getElementById("category").value = "";
+            document.getElementById("budget").value = "";
+            axios.post('http://localhost:3000/add_budget', data)
+                .then(res => {
+                    console.log(res);
+                });
+            document.getElementById("budget_table").innerHTML += "<tr><td>" + category + "</td><td>" + budget + "</td></tr>";
+        };
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function update_budget(budget_data) {
+            console.log(budget_data);
+            var budget_array = [];
+
+            axios.get('http://localhost:3000/get_budgets')
+                .then(function (res) {
+                    for (var i = 0; i < res.data.configured_budget.length; i++) {
+                        var category = res.data.configured_budget[i].category;
+                        budget = parseInt(budget_data[category].value);
+                        budget = budget ? budget : 0;
+                        budget_array.push(
+                            {
+                                "category": category,
+                                "budget": budget,
+                                "color": getRandomColor()
+                            })
+                    }
+                    const data = {
+                        'budget_array': budget_array
+                    }
+                    axios.post('http://localhost:3000/update_budgets', data)
+                        .then(res => {
+                            console.log(res);
+                        });
+                });
+
+        };
+
+        // function delete_budget(category, budget) {
+        //     const data = {
+        //         "category" : category,
+        //         "budget" : budget
+        //     }
+        //     axios.post('http://localhost:3000/delete_budget', data)
+        //         .then(res => {
+        //             console.log(res);
+        //         });
+        // };
+
+    </script>
+
+</body>
+
+</html>

@@ -72,6 +72,531 @@
             "budget": 15,
             "color": "#A14086"
         }
-    ]
-
+    ],
+    "monthly_expenses": {
+        "January": [
+            {
+                "category": "Food",
+                "expense": 90
+            },
+            {
+                "category": "Grocery",
+                "expense": 160
+            },
+            {
+                "category": "Health",
+                "expense": 200
+            },
+            {
+                "category": "Rent",
+                "expense": 500
+            },
+            {
+                "category": "Shopping",
+                "expense": 205
+            },
+            {
+                "category": "Movies",
+                "expense": 60
+            },
+            {
+                "category": "Books",
+                "expense": 70
+            },
+            {
+                "category": "Travel",
+                "expense": 80
+            },
+            {
+                "category": "Utilities",
+                "expense": 60
+            },
+            {
+                "category": "Mobile",
+                "expense": 35
+            },
+            {
+                "category": "Netflix",
+                "expense": 10
+            }
+        ],
+        "February": [
+            {
+                "category": "Food",
+                "expense": 80
+            },
+            {
+                "category": "Grocery",
+                "expense": 140
+            },
+            {
+                "category": "Health",
+                "expense": 250
+            },
+            {
+                "category": "Rent",
+                "expense": 500
+            },
+            {
+                "category": "Shopping",
+                "expense": 225
+            },
+            {
+                "category": "Movies",
+                "expense": 70
+            },
+            {
+                "category": "Books",
+                "expense": 80
+            },
+            {
+                "category": "Travel",
+                "expense": 90
+            },
+            {
+                "category": "Utilities",
+                "expense": 55
+            },
+            {
+                "category": "Mobile",
+                "expense": 45
+            },
+            {
+                "category": "Netflix",
+                "expense": 111
+            }
+        ],
+        "March": [
+            {
+                "category": "Food",
+                "expense": 105
+            },
+            {
+                "category": "Grocery",
+                "expense": 100
+            },
+            {
+                "category": "Health",
+                "expense": 270
+            },
+            {
+                "category": "Rent",
+                "expense": 550
+            },
+            {
+                "category": "Shopping",
+                "expense": 301
+            },
+            {
+                "category": "Movies",
+                "expense": 55
+            },
+            {
+                "category": "Books",
+                "expense": 55
+            },
+            {
+                "category": "Travel",
+                "expense": 90
+            },
+            {
+                "category": "Utilities",
+                "expense": 123
+            },
+            {
+                "category": "Mobile",
+                "expense": 30
+            },
+            {
+                "category": "Netflix",
+                "expense": 0
+            }
+        ],
+        "April": [
+            {
+                "category": "Food",
+                "expense": 95
+            },
+            {
+                "category": "Grocery",
+                "expense": 155
+            },
+            {
+                "category": "Health",
+                "expense": 235
+            },
+            {
+                "category": "Rent",
+                "expense": 505
+            },
+            {
+                "category": "Shopping",
+                "expense": 350
+            },
+            {
+                "category": "Movies",
+                "expense": 20
+            },
+            {
+                "category": "Books",
+                "expense": 30
+            },
+            {
+                "category": "Travel",
+                "expense": 110
+            },
+            {
+                "category": "Utilities",
+                "expense": 75
+            },
+            {
+                "category": "Mobile",
+                "expense": 30
+            }
+        ],
+        "May": [
+            {
+                "category": "Food",
+                "expense": 111
+            },
+            {
+                "category": "Grocery",
+                "expense": 155
+            },
+            {
+                "category": "Health",
+                "expense": 222
+            },
+            {
+                "category": "Rent",
+                "expense": 555
+            },
+            {
+                "category": "Shopping",
+                "expense": 333
+            },
+            {
+                "category": "Movies",
+                "expense": 55
+            },
+            {
+                "category": "Books",
+                "expense": 55
+            },
+            {
+                "category": "Travel",
+                "expense": 111
+            },
+            {
+                "category": "Utilities",
+                "expense": 77
+            },
+            {
+                "category": "Mobile",
+                "expense": 33
+            }
+        ],
+        "June": [
+            {
+                "category": "Food",
+                "expense": 99
+            },
+            {
+                "category": "Grocery",
+                "expense": 149
+            },
+            {
+                "category": "Health",
+                "expense": 199
+            },
+            {
+                "category": "Rent",
+                "expense": 499
+            },
+            {
+                "category": "Shopping",
+                "expense": 299
+            },
+            {
+                "category": "Movies",
+                "expense": 49
+            },
+            {
+                "category": "Books",
+                "expense": 49
+            },
+            {
+                "category": "Travel",
+                "expense": 99
+            },
+            {
+                "category": "Utilities",
+                "expense": 74
+            },
+            {
+                "category": "Mobile",
+                "expense": 29
+            },
+            {
+                "category": "Netflix",
+                "expense": 99
+            }
+        ],
+        "July": [
+            {
+                "category": "Food",
+                "expense": 90
+            },
+            {
+                "category": "Grocery",
+                "expense": 160
+            },
+            {
+                "category": "Health",
+                "expense": 200
+            },
+            {
+                "category": "Rent",
+                "expense": 500
+            },
+            {
+                "category": "Shopping",
+                "expense": 205
+            },
+            {
+                "category": "Movies",
+                "expense": 60
+            },
+            {
+                "category": "Books",
+                "expense": 70
+            },
+            {
+                "category": "Travel",
+                "expense": 80
+            },
+            {
+                "category": "Utilities",
+                "expense": 60
+            },
+            {
+                "category": "Mobile",
+                "expense": 35
+            }
+        ],
+        "August": [
+            {
+                "category": "Food",
+                "expense": 80
+            },
+            {
+                "category": "Grocery",
+                "expense": 140
+            },
+            {
+                "category": "Health",
+                "expense": 250
+            },
+            {
+                "category": "Rent",
+                "expense": 500
+            },
+            {
+                "category": "Shopping",
+                "expense": 225
+            },
+            {
+                "category": "Movies",
+                "expense": 70
+            },
+            {
+                "category": "Books",
+                "expense": 80
+            },
+            {
+                "category": "Travel",
+                "expense": 90
+            },
+            {
+                "category": "Utilities",
+                "expense": 55
+            },
+            {
+                "category": "Mobile",
+                "expense": 45
+            }
+        ],
+        "September": [
+            {
+                "category": "Food",
+                "expense": 105
+            },
+            {
+                "category": "Grocery",
+                "expense": 100
+            },
+            {
+                "category": "Health",
+                "expense": 270
+            },
+            {
+                "category": "Rent",
+                "expense": 550
+            },
+            {
+                "category": "Shopping",
+                "expense": 301
+            },
+            {
+                "category": "Movies",
+                "expense": 55
+            },
+            {
+                "category": "Books",
+                "expense": 55
+            },
+            {
+                "category": "Travel",
+                "expense": 90
+            },
+            {
+                "category": "Utilities",
+                "expense": 123
+            },
+            {
+                "category": "Mobile",
+                "expense": 30
+            }
+        ],
+        "October": [
+            {
+                "category": "Food",
+                "expense": 95
+            },
+            {
+                "category": "Grocery",
+                "expense": 155
+            },
+            {
+                "category": "Health",
+                "expense": 235
+            },
+            {
+                "category": "Rent",
+                "expense": 505
+            },
+            {
+                "category": "Shopping",
+                "expense": 350
+            },
+            {
+                "category": "Movies",
+                "expense": 20
+            },
+            {
+                "category": "Books",
+                "expense": 30
+            },
+            {
+                "category": "Travel",
+                "expense": 110
+            },
+            {
+                "category": "Utilities",
+                "expense": 75
+            },
+            {
+                "category": "Mobile",
+                "expense": 30
+            }
+        ],
+        "November": [
+            {
+                "category": "Food",
+                "expense": 111
+            },
+            {
+                "category": "Grocery",
+                "expense": 155
+            },
+            {
+                "category": "Health",
+                "expense": 222
+            },
+            {
+                "category": "Rent",
+                "expense": 555
+            },
+            {
+                "category": "Shopping",
+                "expense": 333
+            },
+            {
+                "category": "Movies",
+                "expense": 55
+            },
+            {
+                "category": "Books",
+                "expense": 55
+            },
+            {
+                "category": "Travel",
+                "expense": 111
+            },
+            {
+                "category": "Utilities",
+                "expense": 77
+            },
+            {
+                "category": "Mobile",
+                "expense": 33
+            }
+        ],
+        "December": [
+            {
+                "category": "Food",
+                "expense": 11
+            },
+            {
+                "category": "Grocery",
+                "expense": 22
+            },
+            {
+                "category": "Health",
+                "expense": 33
+            },
+            {
+                "category": "Rent",
+                "expense": 44
+            },
+            {
+                "category": "Shopping",
+                "expense": 55
+            },
+            {
+                "category": "Movies",
+                "expense": 66
+            },
+            {
+                "category": "Books",
+                "expense": 77
+            },
+            {
+                "category": "Travel",
+                "expense": 88
+            },
+            {
+                "category": "Utilities",
+                "expense": 99
+            },
+            {
+                "category": "Mobile",
+                "expense": 111
+            },
+            {
+                "category": "Netflix",
+                "expense": 10
+            }
+        ]
+    }
 }
