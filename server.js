@@ -88,31 +88,36 @@ app.get('/get_budgets', (req, res) => {
 });
 
 app.post('/add_budget', (req, res) => {
-    const { category, budget } = req.body;
+    const { new_budget } = req.body;
     fs.readFile('./myBudget.json', 'utf8', function readFileCallback(err, data) {
         if (err) {
             console.log(err);
             callback(err);
         } else {
-            function getRandomColor() {
-                var letters = '0123456789ABCDEF';
-                var color = '#';
-                for (var i = 0; i < 6; i++) {
-                  color += letters[Math.floor(Math.random() * 16)];
-                }
-                return color;
-              }              
             obj = JSON.parse(data);
-            obj.configured_budget.push(
-                {
-                    "category": category,
-                    "budget": parseInt(budget),
-                    "color": getRandomColor()
+            budget_exists = false;
+
+            for (var i = 0; i < obj.configured_budget.length; i++) {
+                if (obj.configured_budget[i].category == new_budget.category) {
+                    budget_exists = true;
+                    break;
+                }
+            }
+
+            if (!budget_exists) {
+                obj.configured_budget.push(new_budget);
+
+                json = JSON.stringify(obj);
+                fs.writeFile('./myBudget.json', json, 'utf8', function (err, result) {
+                    if (err) console.log('error', err);
                 });
-            json = JSON.stringify(obj);
-            fs.writeFile('./myBudget.json', json, 'utf8', function (err, result) {
-                if (err) console.log('error', err);
+            }
+
+            res.json({
+                "budget_exists": budget_exists
             });
+
+
         }
     });
 })

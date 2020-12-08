@@ -107,7 +107,7 @@
 				.then(function (res) {
 					for (var i = 0; i < res.data.configured_budget.length; i++) {
 						var category = res.data.configured_budget[i].category;
-						var budget = res.data.configured_budget[i].budget;
+						// var budget = res.data.configured_budget[i].budget;
 						barChartData.labels.push(category);
 					}
 					createBarChart();
