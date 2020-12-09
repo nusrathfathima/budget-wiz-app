@@ -13,8 +13,8 @@
 <script>
     function signup(user) {
         var fullname = user.fullname.value;
-        var username = user.username.value;
-        var password = user.password.value;
+        var username = user.new_username.value;
+        var password = user.new_password.value;
         var confirm_password = user.confirm_password.value;
 
         if (!fullname) {
@@ -41,8 +41,8 @@
                     if (res.data.signup_status) {
                         // document.getElementById("signup_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
                         document.getElementById("fullname").value = "";
-                        document.getElementById("username").value = "";
-                        document.getElementById("password").value = "";
+                        document.getElementById("new_username").value = "";
+                        document.getElementById("new_password").value = "";
                         document.getElementById("confirm_password").value = "";
 
                         window.history.replaceState("", 'Dashboard', './dashboard.html');
@@ -71,12 +71,12 @@
             <label for="fullname"><b>Full Name</b></label>
             <input id="fullname" type="text" placeholder="Enter Full Name" name="fullname" size="20">
             <br>
-            <label for="username"><b>Username</b></label>
-            <input id="username" type="text" placeholder="Enter Username" name="username">
+            <label for="new_username"><b>Username</b></label>
+            <input id="new_username" type="text" placeholder="Enter Username" name="new_username">
             <br>
 
-            <label for="password"><b>Password</b></label>
-            <input id="password" type="password" placeholder="Enter Password" name="password">
+            <label for="new_password"><b>Password</b></label>
+            <input id="new_password" type="password" placeholder="Enter Password" name="new_password">
             <br>
             <label for="confirm_password"><b>Confirm Password</b></label>
             <input id="confirm_password" type="password" placeholder="Enter Password Again" name="confirm_password">

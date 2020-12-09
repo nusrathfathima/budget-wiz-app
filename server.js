@@ -1,10 +1,19 @@
 //Budget API
 const express = require('express');
+const mysql = require('mysql');
+const port = process.env.port || 3000;
+const app = express();
+const cryptoJS = require("crypto");
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const app = express();
-const port = 3000;
+
+var connection = mysql.createConnection({
+    host        : 'sql9.freemysqlhosting.net',
+    user        : 'sql9381050',
+    password    : '63JDznsk55',
+    database    : 'sql9381050'
+})
 
 app.use(cors());
 
@@ -13,64 +22,48 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    fs.readFile('./myBudget.json', 'utf8', function readFileCallback(err, data) {
-        if (err) {
-            console.log(err);
-            callback(err);
-        } else {
-            login_status = false;
-            obj = JSON.parse(data);
-            user_accounts = obj.user_accounts;
-            for (var i=0; i < user_accounts.length; i++) {
-                if (user_accounts[i].username == username && user_accounts[i].password == password) {
-                    login_status = true;
-                    break;
-                }
-            }
-            res.json({
-                "login_status": login_status
-            });
+
+    var encrptd_password = cryptoJS.createHmac('sha256', password).update('nusrath').digest('hex');
+
+    const sql_query = `SELECT * FROM user_accounts WHERE username='${username}' AND password='${encrptd_password}'`;
+
+    // connection.connect();
+    connection.query(sql_query, function(error, results, fields) {
+        // connection.end();
+        login_status = false;
+        if (error) {
+            // throw error;
+            console.log(error);
         }
+
+        if (results.length > 0) {
+            login_status = true;
+        }
+        res.json({
+            "login_status": login_status
+        });
     });
 })
 
 app.post('/signup', (req, res) => {
     const { fullname, username, password } = req.body;
-    fs.readFile('./myBudget.json', 'utf8', function readFileCallback(err, data) {
-        if (err) {
-            console.log(err);
-            callback(err);
-        } else {
-            signup_status = true;
 
-            user_profile = {
-                "fullname": fullname,
-                "username": username,
-                "password": password
-            };
+    var encrptd_password = cryptoJS.createHmac('sha256', password).update('nusrath').digest('hex');
 
-            obj = JSON.parse(data);
-            user_accounts = obj.user_accounts;
-            for (var i=0; i < user_accounts.length; i++) {
-                if (user_accounts[i].username == username) {
-                    signup_status = false;
-                    break;
-                }
-            }
+    const sql_query = `INSERT INTO user_accounts(fullname, username, password) VALUES ('${fullname}', '${username}', '${encrptd_password}')`;
 
-            if (signup_status) {
-                obj.user_accounts.push(user_profile);
-
-                json = JSON.stringify(obj);
-                fs.writeFile('./myBudget.json', json, 'utf8', function (err, result) {
-                    if (err) console.log('error', err);
-                });    
-            }
-
-            res.json({
-                "signup_status": signup_status
-            });
+    // connection.connect();
+    connection.query(sql_query, function(error, results, fields) {
+        // connection.end();
+        signup_status = true;
+        if (error) {
+            console.log(error);
+            signup_status = false;
         }
+
+        res.json({
+            "signup_status": signup_status
+        });
     });
 })
 
@@ -187,5 +180,5 @@ app.post('/add_expenses', (req, res) => {
 // })
 
 app.listen(port, () => {
-    console.log(`API served at http://localhost:${port}`);
+    console.log(`Server on port:${port}`);
 });
