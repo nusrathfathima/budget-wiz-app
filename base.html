@@ -25,7 +25,7 @@
         <a class="appName">Budget Wiz</a>
         <div class="w3-dropdown-hover w3-right userDropdown">
             <button class="w3-button w3-#BCD2E8 userButton">
-                Welcome, USER!
+                Welcome, <span id="display_username"></span>!
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="w3-dropdown-content w3-bar-block w3-border">
@@ -63,11 +63,11 @@
         $(function () {
             $(".loginForm").load("login.html");
             $(".signupForm").load("signup.html");
-            $(".pieChart").load("pie.html");
-            $(".barChart").load("bar.html");
-            $(".lineChart").load("line.html");
-            $(".monthlyExpense").load("monthly_expense.html");
-            $(".configureBudget").load("configure_budget.html");
+            // $(".pieChart").load("pie.html");
+            // $(".barChart").load("bar.html");
+            // $(".lineChart").load("line.html");
+            // $(".monthlyExpense").load("monthly_expense.html");
+            // $(".configureBudget").load("configure_budget.html");
         });
 
         function logout() {

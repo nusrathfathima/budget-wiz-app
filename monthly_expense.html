@@ -53,7 +53,12 @@
         crossorigin="anonymous"></script>
     <script>
         function get_expenses() {
-            axios.get('http://localhost:3000/get_budgets')
+			const data = {
+				params: {
+					'username': document.getElementById("display_username").innerText
+				}
+			}
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -79,8 +84,14 @@
         function submit_expenses(expense_data) {
             var month = expense_data.months.value;
             var expense_array = [];
+            var username = document.getElementById("display_username").innerText;
+			const data = {
+				params: {
+					'username': username
+				}
+			}
 
-            axios.get('http://localhost:3000/get_budgets')
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -94,7 +105,8 @@
                     }
                     const data = {
                         'month': month,
-                        'expense_array': expense_array
+                        'expense_array': expense_array,
+                        'username': username
                     }
                     axios.post('http://localhost:3000/add_expenses', data)
                         .then(res => {
@@ -104,7 +116,12 @@
         }
 
         function load_expenses(m) {
-            axios.get('http://localhost:3000/get_budgets')
+			const data = {
+				params: {
+					'username': document.getElementById("display_username").innerText
+				}
+			}
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     var month = m[m.selectedIndex].value;
                     var month_id = m[m.selectedIndex].id;
@@ -114,17 +131,20 @@
                     else {
                         document.getElementById("expenseTable").hidden = true;
                     }
-                    for (var i = 0; i < res.data.configured_budget.length; i++) {
-                        var category = res.data.configured_budget[i].category;
-                        var expense = null;
-                        try {
-                            expense = res.data.monthly_expenses[month][i].expense;
-                        }
-                        catch (err) {
-                        }
+					axios.get('http://localhost:3000/get_expenses', data)
+						.then(function (res_expenses) {
+                        for (var i = 0; i < res.data.configured_budget.length; i++) {
+                            var category = res.data.configured_budget[i].category;
+                            var expense = null;
+                            try {
+                                expense = res_expenses.data.monthly_expenses[month][i].expense;
+                            }
+                            catch (err) {
+                            }
 
-                        document.getElementsByName(category)[0].value = expense;
-                    }
+                            document.getElementsByName(category)[0].value = expense;
+                        }
+                    });
                 });
         }
 

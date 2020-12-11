@@ -39,7 +39,12 @@
         crossorigin="anonymous"></script>
     <script>
         function get_budgets() {
-            axios.get('http://localhost:3000/get_budgets')
+            const data = {
+                params: {
+                    'username': document.getElementById("display_username").innerText
+                }
+            }
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -65,6 +70,8 @@
             var budget = parseInt(config.budget.value);
             budget = budget ? budget : 0;
 
+            var username = document.getElementById("display_username").innerText;
+
             if (!category) {
                 alert("Please Enter Category");
             }
@@ -72,13 +79,11 @@
                 alert("Please Enter Valid Budget");
             }
             else {
-                const new_budget = {
-                    "category": category,
-                    "budget": budget,
-                    "color": getRandomColor()
-                }
                 const data = {
-                    'new_budget': new_budget
+                    'category': category,
+                    'budget': budget,
+                    'color': getRandomColor(),
+                    'username': username
                 }
                 document.getElementById("category").value = "";
                 document.getElementById("budget").value = "";
@@ -89,6 +94,7 @@
                         }
                         else {
                             document.getElementById("budgetTable").innerHTML += "<tr><td>" + category + "</td><td>" + budget + "</td></tr>";
+                            alert("Successfully Added Budget Category");
                         }
                     })
             }
@@ -105,8 +111,15 @@
 
         function update_budget(budget_data) {
             var budget_array = [];
+            var username = document.getElementById("display_username").innerText;
 
-            axios.get('http://localhost:3000/get_budgets')
+            const data = {
+                params: {
+                    'username': username
+                }
+            }
+
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -119,10 +132,11 @@
                                 "color": getRandomColor()
                             })
                     }
-                    const data = {
-                        'budget_array': budget_array
+                    const post_data = {
+                        'budget_array': budget_array,
+                        'username': username
                     }
-                    axios.post('http://localhost:3000/update_budgets', data)
+                    axios.post('http://localhost:3000/update_budgets', post_data)
                         .then(res => {
                             console.log(res);
                         });

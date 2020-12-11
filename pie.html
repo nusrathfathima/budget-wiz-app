@@ -40,7 +40,12 @@
             });
         }
         function drawPie() {
-            axios.get('http://localhost:3000/get_budgets')
+			const data = {
+				params: {
+					'username': document.getElementById("display_username").innerText
+				}
+			}
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;

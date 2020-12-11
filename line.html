@@ -115,7 +115,12 @@
 		}
 
 		function drawLine() {
-			axios.get('http://localhost:3000/get_budgets')
+			const data = {
+				params: {
+					'username': document.getElementById("display_username").innerText
+				}
+			}
+			axios.get('http://localhost:3000/get_budgets', data)
 				.then(function (res) {
 					for (var i = 0; i < res.data.configured_budget.length; i++) {
 						var category = res.data.configured_budget[i].category;
@@ -128,32 +133,40 @@
 		drawLine();
 
 		function load_line_expenses(m) {
-			axios.get('http://localhost:3000/get_budgets')
+			const data = {
+				params: {
+					'username': document.getElementById("display_username").innerText
+				}
+			}
+			axios.get('http://localhost:3000/get_budgets', data)
 				.then(function (res) {
 					lineChartData.datasets[0].data = [];
 					lineChartData.datasets[1].data = [];
 					var category = m[m.selectedIndex].value;
 					var id = parseInt(m[m.selectedIndex].id) - 1;
 
-					if (id >= 0) {
-						var budget = res.data.configured_budget[id].budget;
-						var color = res.data.configured_budget[id].color;
-						lineChartData.datasets[1].borderColor = color;
-						var month;
-						var expense;
-						for (var i = 0; i < 12; i++) {
-							month = lineChartData.labels[i];
-							expense = 0;
-							try {
-								expense = res.data.monthly_expenses[month][id].expense;
+					axios.get('http://localhost:3000/get_expenses', data)
+						.then(function (res_expenses) {
+							if (id >= 0) {
+								var budget = res.data.configured_budget[id].budget;
+								var color = res.data.configured_budget[id].color;
+								lineChartData.datasets[1].borderColor = color;
+								var month;
+								var expense;
+								for (var i = 0; i < 12; i++) {
+									month = lineChartData.labels[i];
+									expense = 0;
+									try {
+										expense = res_expenses.data.monthly_expenses[month][id].expense;
+									}
+									catch (err) {
+									}
+									lineChartData.datasets[0].data.push(budget);
+									lineChartData.datasets[1].data.push(expense);
+								}
 							}
-							catch (err) {
-							}
-							lineChartData.datasets[0].data.push(budget);
-							lineChartData.datasets[1].data.push(expense);
-						}
-					}
-					createLineChart();
+							createLineChart();
+						});
 				});
 		}
 	</script>
