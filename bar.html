@@ -102,10 +102,14 @@
 		};
 
 		function drawBar() {
+			const token = localStorage.getItem('jwt');
 			const data = {
 				params: {
 					'username': document.getElementById("display_username").innerText
-				}
+				},
+				headers: {
+                    'Authorization': `Bearer ${token}`
+                }
 			}
 			axios.get('http://localhost:3000/get_budgets', data)
 				.then(function (res) {
@@ -120,10 +124,14 @@
 		drawBar();
 
 		function load_bar_expenses(m) {
+			const token = localStorage.getItem('jwt');
 			const data = {
 				params: {
 					'username': document.getElementById("display_username").innerText
-				}
+				},
+				headers: {
+                    'Authorization': `Bearer ${token}`
+                }
 			}
 			axios.get('http://localhost:3000/get_budgets', data)
 				.then(function (res) {

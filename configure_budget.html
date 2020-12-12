@@ -39,11 +39,15 @@
         crossorigin="anonymous"></script>
     <script>
         function get_budgets() {
-            const data = {
-                params: {
-                    'username': document.getElementById("display_username").innerText
+			const token = localStorage.getItem('jwt');
+			const data = {
+				params: {
+					'username': document.getElementById("display_username").innerText
+				},
+				headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            }
+			}
             axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
@@ -113,11 +117,15 @@
             var budget_array = [];
             var username = document.getElementById("display_username").innerText;
 
-            const data = {
-                params: {
-                    'username': username
+			const token = localStorage.getItem('jwt');
+			const data = {
+				params: {
+					'username': username
+				},
+				headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            }
+			}
 
             axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {

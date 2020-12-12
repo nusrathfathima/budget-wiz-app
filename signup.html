@@ -46,10 +46,22 @@
                         document.getElementById("confirm_password").value = "";
 
                         window.history.replaceState("", 'Dashboard', './dashboard.html');
+                        document.getElementById("display_username").innerHTML = username;
+                        localStorage.setItem('jwt', res.data.token);
                         document.title = 'Dashboard';
                         $(".homeContent").hide();
                         $(".dashboardContent").show();
                         $('.userDropdown').show();
+
+                        var jwtTimeout = setTimeout(() => {
+                            jwtExpires();
+                        }, 60000
+                        )
+
+                        setTimeout(() => {
+                            sessionExpiration(jwtTimeout);
+                        }, 40000
+                        )
                     }
                     else {
                         alert("Username Already Exists!!!");

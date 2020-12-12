@@ -36,17 +36,29 @@
                     $(".dashboardContent").show();
                     $('.userDropdown').show();
                     document.getElementById("display_username").innerHTML = username;
+                    localStorage.setItem('jwt', res.data.token);
                     $(".pieChart").load("pie.html");
                     $(".barChart").load("bar.html");
                     $(".lineChart").load("line.html");
                     $(".monthlyExpense").load("monthly_expense.html");
                     $(".configureBudget").load("configure_budget.html");
+
+                    var jwtTimeout = setTimeout(() => {
+                        jwtExpires();
+                    }, 60000
+                    )
+
+                    setTimeout(() => {
+                        sessionExpiration(jwtTimeout);
+                    }, 40000
+                    )
                 }
                 else {
                     alert("Incorrect Username or Password!!!");
                 }
             })
     };
+
 </script>
 
 <body>

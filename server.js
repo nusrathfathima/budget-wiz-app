@@ -5,7 +5,13 @@ const app = express();
 const cryptoJS = require("crypto");
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const jwt = require('jsonwebtoken'); 
+const exjwt = require('express-jwt');
+
+app.use(cors());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var connection = mysql.createConnection({
     host: 'sql9.freemysqlhosting.net',
@@ -14,10 +20,11 @@ var connection = mysql.createConnection({
     database: 'sql9381050'
 })
 
-app.use(cors());
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const secretKey = 'My super secret key';
+const jwtMW = exjwt({
+    secret: secretKey,
+    algorithms: ['HS256']
+});
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -32,12 +39,14 @@ app.post('/login', (req, res) => {
             // throw error;
             console.log(error);
         }
-
+        let token = null
         if (results.length > 0) {
             login_status = true;
+            token = jwt.sign({ id: results[0].id, username: results[0].username}, secretKey, {expiresIn: 60 });
         }
         res.json({
-            "login_status": login_status
+            "login_status": login_status,
+            "token": token
         });
     });
 })
@@ -55,15 +64,20 @@ app.post('/signup', (req, res) => {
             console.log(error);
             signup_status = false;
         }
+        let token = null
+        if (signup_status) {
+            token = jwt.sign({ id: results.insertId, username: username}, secretKey, {expiresIn: 60 });
+        }
 
         res.json({
-            "signup_status": signup_status
+            "signup_status": signup_status,
+            "token": token
         });
     });
 })
 
 
-app.get('/get_budgets', (req, res) => {
+app.get('/get_budgets', jwtMW, (req, res) => {
     var configured_budget = [];
 
     const username = req.query.username;
@@ -87,7 +101,7 @@ app.get('/get_budgets', (req, res) => {
     });
 });
 
-app.get('/get_expenses', (req, res) => {
+app.get('/get_expenses', jwtMW, (req, res) => {
     var monthly_expenses = {};
 
     const username = req.query.username;

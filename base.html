@@ -36,6 +36,13 @@
         </div>
     </div>
 
+    <div id="sessionModal" class="sessionModal" hidden>
+        <div class="sessionModal-content">
+            <p>Your Session Will Expire In 20 Seconds! Pleae Click Extend Session button to extend your session.</p>
+            <button id="extendSession">Extend Session</button>
+            <button id="cancelSession">Cancel</button>
+        </div>
+    </div>
     <div class="homeContent">
         <div class="loginForm"></div>
         <br>
@@ -78,5 +85,56 @@
             $('.userDropdown').hide();
         };
 
+
+        const jwtToken = (token) => {
+            try {
+                return JSON.parse(atob(token.split('.')[1]));
+            } catch (e) {
+                return null;
+            }
+        };
+
+        function jwtExpires() {
+            document.getElementById("sessionModal").hidden = true;
+            let token = localStorage.getItem('jwt')
+            localStorage.removeItem('jwt')
+            if (token) {
+                let parsedToken = jwtToken(token)
+                if (Date.now() <= parsedToken.exp * 1000) {
+                    return true
+                }
+                else {
+                    localStorage.removeItem('jwt');
+                    logout();
+                }
+            }
+        }
+
+        function sessionExpiration(jwtTimeout) {
+            sessionModal = document.getElementById("sessionModal");
+            sessionModal.hidden = false;
+
+            extendSession = document.getElementById("extendSession");
+            cancelSession = document.getElementById("cancelSession");
+
+            extendSession.onclick = function () {
+                clearTimeout(jwtTimeout);
+                sessionModal.hidden = true;
+
+                jwtTimeout = setTimeout(() => {
+                    jwtExpires();
+                }, 60000
+                )
+
+                setTimeout(() => {
+                    sessionExpiration(jwtTimeout);
+                }, 40000
+                )
+            }
+
+            cancelSession.onclick = function () {
+                sessionModal.hidden = true;
+            }
+        }
     </script>
 </body>

@@ -53,10 +53,14 @@
         crossorigin="anonymous"></script>
     <script>
         function get_expenses() {
+			const token = localStorage.getItem('jwt');
 			const data = {
 				params: {
 					'username': document.getElementById("display_username").innerText
-				}
+				},
+				headers: {
+                    'Authorization': `Bearer ${token}`
+                }
 			}
             axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
@@ -85,10 +89,14 @@
             var month = expense_data.months.value;
             var expense_array = [];
             var username = document.getElementById("display_username").innerText;
+			const token = localStorage.getItem('jwt');
 			const data = {
 				params: {
 					'username': username
-				}
+				},
+				headers: {
+                    'Authorization': `Bearer ${token}`
+                }
 			}
 
             axios.get('http://localhost:3000/get_budgets', data)
@@ -116,10 +124,14 @@
         }
 
         function load_expenses(m) {
+			const token = localStorage.getItem('jwt');
 			const data = {
 				params: {
 					'username': document.getElementById("display_username").innerText
-				}
+				},
+				headers: {
+                    'Authorization': `Bearer ${token}`
+                }
 			}
             axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
