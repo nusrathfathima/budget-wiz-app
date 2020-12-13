@@ -78,6 +78,15 @@
         });
 
         function logout() {
+            // 
+            // 
+            // CLEAR BOTH EXPIRATION ALERT AND JWT EXPIRES TIMEOUTS AT LOGOUT!!!
+            // IF NOT, NEW USER WILL WITNESS THE OLD USERS' TIMEOUTS!!!
+            // ONE POSSIBLE SOLUTION IS TO SET AN EXPIRATION FOR TOKENS AND REFRESH TOKEN WHEN
+            // EXTEND SESSION BUTTON IS CLICKED.
+            // 
+            // 
+            localStorage.removeItem('jwt');
             window.history.replaceState("", 'Home', './index.html');
             document.title = 'Home';
             $('.homeContent').show();
@@ -111,29 +120,33 @@
         }
 
         function sessionExpiration(jwtTimeout) {
-            sessionModal = document.getElementById("sessionModal");
-            sessionModal.hidden = false;
+            token = localStorage.getItem("jwt");
+            if (token) {
+                sessionModal = document.getElementById("sessionModal");
+                sessionModal.hidden = false;
 
-            extendSession = document.getElementById("extendSession");
-            cancelSession = document.getElementById("cancelSession");
+                extendSession = document.getElementById("extendSession");
+                cancelSession = document.getElementById("cancelSession");
 
-            extendSession.onclick = function () {
-                clearTimeout(jwtTimeout);
-                sessionModal.hidden = true;
+                extendSession.onclick = function () {
+                    clearTimeout(jwtTimeout);
+                    sessionModal.hidden = true;
 
-                jwtTimeout = setTimeout(() => {
-                    jwtExpires();
-                }, 60000
-                )
+                    jwtTimeout = setTimeout(() => {
+                        jwtExpires();
+                    }, 60000
+                    )
 
-                setTimeout(() => {
-                    sessionExpiration(jwtTimeout);
-                }, 40000
-                )
-            }
+                    setTimeout(() => {
+                        sessionExpiration(jwtTimeout);
+                    }, 40000
+                    )
+                }
 
-            cancelSession.onclick = function () {
-                sessionModal.hidden = true;
+                cancelSession.onclick = function () {
+                    sessionModal.hidden = true;
+                }
+
             }
         }
     </script>

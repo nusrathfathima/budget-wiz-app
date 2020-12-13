@@ -58,7 +58,12 @@
                 }, 40000
                 )
             }).catch((err) => {
-                status_code = err.response.status;
+                try {
+                    status_code = err.response.status;
+                }
+                catch (e) {
+                    status_code = 500;
+                }
 
                 if (status_code == 401) {
                     alert("Incorrect Username or Password!!!");

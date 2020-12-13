@@ -39,15 +39,15 @@
         crossorigin="anonymous"></script>
     <script>
         function get_budgets() {
-			const token = localStorage.getItem('jwt');
-			const data = {
-				params: {
-					'username': document.getElementById("display_username").innerText
-				},
-				headers: {
+            const token = localStorage.getItem('jwt');
+            const data = {
+                params: {
+                    'username': document.getElementById("display_username").innerText
+                },
+                headers: {
                     'Authorization': `Bearer ${token}`
                 }
-			}
+            }
             axios.get('http://142.93.1.183:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
@@ -63,6 +63,20 @@
                             "</td>" +
                             "</tr>";
                         // "<td style=\"border: none;\"><button style=\"border-color: red;\" onclick=\"delete_budget(" + category + ", " + budget + " )\"><a style=\"color: red;\">x</a></button</td></tr>";
+                    }
+                }).catch((err) => {
+                    try {
+                        status_code = err.response.status;
+                    }
+                    catch (e) {
+                        status_code = 500;
+                    }
+                    if (status_code == 401) {
+                        alert("Session Expired. Please Login Again!");
+                        logout();
+                    }
+                    else if (status_code == 500) {
+                        alert("Internal Server Error. Please Try Again!");
                     }
                 });
 
@@ -93,12 +107,20 @@
                 document.getElementById("budget").value = "";
                 axios.post('http://142.93.1.183:3000/add_budget', data)
                     .then(function (res) {
-                        if (res.data.budget_exists) {
+                        document.getElementById("budgetTable").innerHTML += "<tr><td>" + category + "</td><td>" + budget + "</td></tr>";
+                        alert("Successfully Added Budget Category");
+                    }).catch((err) => {
+                        try {
+                            status_code = err.response.status;
+                        }
+                        catch (e) {
+                            status_code = 500;
+                        }
+                        if (status_code == 409) {
                             alert("Budget Category Already Exists!!!");
                         }
-                        else {
-                            document.getElementById("budgetTable").innerHTML += "<tr><td>" + category + "</td><td>" + budget + "</td></tr>";
-                            alert("Successfully Added Budget Category");
+                        else if (status_code == 500) {
+                            alert("Internal Server Error. Please Try Again!");
                         }
                     })
             }
@@ -117,15 +139,15 @@
             var budget_array = [];
             var username = document.getElementById("display_username").innerText;
 
-			const token = localStorage.getItem('jwt');
-			const data = {
-				params: {
-					'username': username
-				},
-				headers: {
+            const token = localStorage.getItem('jwt');
+            const data = {
+                params: {
+                    'username': username
+                },
+                headers: {
                     'Authorization': `Bearer ${token}`
                 }
-			}
+            }
 
             axios.get('http://142.93.1.183:3000/get_budgets', data)
                 .then(function (res) {
@@ -147,7 +169,31 @@
                     axios.post('http://142.93.1.183:3000/update_budgets', post_data)
                         .then(res => {
                             console.log(res);
+                        }).catch((err) => {
+                            try {
+                                status_code = err.response.status;
+                            }
+                            catch (e) {
+                                status_code = 500;
+                            }
+                            if (status_code == 500) {
+                                alert("Internal Server Error. Please Try Again!");
+                            }
                         });
+                }).catch((err) => {
+                    try {
+                        status_code = err.response.status;
+                    }
+                    catch (e) {
+                        status_code = 500;
+                    }
+                    if (status_code == 401) {
+                        alert("Session Expired. Please Login Again!");
+                        logout();
+                    }
+                    else if (status_code == 500) {
+                        alert("Internal Server Error. Please Try Again!");
+                    }
                 });
 
         };

@@ -121,8 +121,8 @@
 					'username': document.getElementById("display_username").innerText
 				},
 				headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+					'Authorization': `Bearer ${token}`
+				}
 			}
 			axios.get('http://142.93.1.183:3000/get_budgets', data)
 				.then(function (res) {
@@ -132,6 +132,20 @@
 							"<option id=" + (i + 1) + " value='" + category + "'>" + category + "</option>";
 					}
 					createLineChart();
+				}).catch((err) => {
+					try {
+						status_code = err.response.status;
+					}
+					catch (e) {
+						status_code = 500;
+					}
+					if (status_code == 401) {
+						alert("Session Expired. Please Login Again!");
+						logout();
+					}
+					else if (status_code == 500) {
+						alert("Internal Server Error. Please Try Again!");
+					}
 				});
 		}
 		drawLine();
@@ -143,8 +157,8 @@
 					'username': document.getElementById("display_username").innerText
 				},
 				headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+					'Authorization': `Bearer ${token}`
+				}
 			}
 			axios.get('http://142.93.1.183:3000/get_budgets', data)
 				.then(function (res) {
@@ -174,7 +188,35 @@
 								}
 							}
 							createLineChart();
+						}).catch((err) => {
+							try {
+								status_code = err.response.status;
+							}
+							catch (e) {
+								status_code = 500;
+							}
+							if (status_code == 401) {
+								alert("Session Expired. Please Login Again!");
+								logout();
+							}
+							else if (status_code == 500) {
+								alert("Internal Server Error. Please Try Again!");
+							}
 						});
+				}).catch((err) => {
+					try {
+						status_code = err.response.status;
+					}
+					catch (e) {
+						status_code = 500;
+					}
+					if (status_code == 401) {
+						alert("Session Expired. Please Login Again!");
+						logout();
+					}
+					else if (status_code == 500) {
+						alert("Internal Server Error. Please Try Again!");
+					}
 				});
 		}
 	</script>

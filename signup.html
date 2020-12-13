@@ -35,7 +35,7 @@
                     'Content-Type': 'application/json;charset=UTF-8',
                     "Access-Control-Allow-Origin": "*",
                 }
-            }; 
+            };
             var data = {
                 'fullname': fullname,
                 'username': username,
@@ -44,35 +44,44 @@
 
             axios.post('http://142.93.1.183:3000/signup', data)
                 .then(function (res) {
-                    if (res.data.signup_status) {
-                        // document.getElementById("signup_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
-                        document.getElementById("fullname").value = "";
-                        document.getElementById("new_username").value = "";
-                        document.getElementById("new_password").value = "";
-                        document.getElementById("confirm_password").value = "";
+                    // document.getElementById("signup_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
+                    document.getElementById("fullname").value = "";
+                    document.getElementById("new_username").value = "";
+                    document.getElementById("new_password").value = "";
+                    document.getElementById("confirm_password").value = "";
 
-                        window.history.replaceState("", 'Dashboard', './dashboard.html');
-                        document.getElementById("display_username").innerHTML = username;
-                        localStorage.setItem('jwt', res.data.token);
-                        document.title = 'Dashboard';
-                        $(".homeContent").hide();
-                        $(".dashboardContent").show();
-                        $('.userDropdown').show();
+                    window.history.replaceState("", 'Dashboard', './dashboard.html');
+                    document.getElementById("display_username").innerHTML = username;
+                    localStorage.setItem('jwt', res.data.token);
+                    document.title = 'Dashboard';
+                    $(".homeContent").hide();
+                    $(".dashboardContent").show();
+                    $('.userDropdown').show();
 
-                        var jwtTimeout = setTimeout(() => {
-                            jwtExpires();
-                        }, 60000
-                        )
+                    var jwtTimeout = setTimeout(() => {
+                        jwtExpires();
+                    }, 60000
+                    )
 
-                        setTimeout(() => {
-                            sessionExpiration(jwtTimeout);
-                        }, 40000
-                        )
+                    setTimeout(() => {
+                        sessionExpiration(jwtTimeout);
+                    }, 40000
+                    )
+                }).catch((err) => {
+                    try {
+                        status_code = err.response.status;
                     }
-                    else {
+                    catch (e) {
+                        status_code = 500;
+                    }
+
+                    if (status_code == 409) {
                         alert("Username Already Exists!!!");
                     }
-                }).catch((err) => { console.log('Axios Error:', err); })
+                    else if (status_code == 500) {
+                        alert("Internal Server Error. Please Try Again!");
+                    }
+                })
         }
     };
 </script>

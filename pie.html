@@ -40,15 +40,15 @@
             });
         }
         function drawPie() {
-			const token = localStorage.getItem('jwt');
-			const data = {
-				params: {
-					'username': document.getElementById("display_username").innerText
-				},
-				headers: {
+            const token = localStorage.getItem('jwt');
+            const data = {
+                params: {
+                    'username': document.getElementById("display_username").innerText
+                },
+                headers: {
                     'Authorization': `Bearer ${token}`
                 }
-			}
+            }
             axios.get('http://142.93.1.183:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
@@ -60,6 +60,20 @@
                         dataSource.datasets[0].backgroundColor.push(color);
                     }
                     createPieChart();
+                }).catch((err) => {
+                    try {
+                        status_code = err.response.status;
+                    }
+                    catch (e) {
+                        status_code = 500;
+                    }
+                    if (status_code == 401) {
+                        alert("Session Expired. Please Login Again!");
+                        logout();
+                    }
+                    else if (status_code == 500) {
+                        alert("Internal Server Error. Please Try Again!");
+                    }
                 });
         }
 
