@@ -26,53 +26,48 @@
             'username': username,
             'password': password
         };
-        // var data = {
-        //     params: {
-        //         'username': username,
-        //         'password': password
-        //     },
-        //     headers: {
-        //         'Content-Type': 'application/json;charset=UTF-8',
-        //         "Access-Control-Allow-Origin": "*",
-        //     }
-        // }
 
         axios.post('http://142.93.1.183:3000/login', data)
             .then(function (res) {
 
-                if (res.data.login_status) {
-                    // document.getElementById("login_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
+                // document.getElementById("login_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
 
-                    document.getElementById("username").value = "";
-                    document.getElementById("password").value = "";
+                document.getElementById("username").value = "";
+                document.getElementById("password").value = "";
 
-                    window.history.replaceState("", 'Dashboard', './dashboard.html');
-                    document.title = 'Dashboard';
-                    $(".homeContent").hide();
-                    $(".dashboardContent").show();
-                    $('.userDropdown').show();
-                    document.getElementById("display_username").innerHTML = username;
-                    localStorage.setItem('jwt', res.data.token);
-                    $(".pieChart").load("pie.html");
-                    $(".barChart").load("bar.html");
-                    $(".lineChart").load("line.html");
-                    $(".monthlyExpense").load("monthly_expense.html");
-                    $(".configureBudget").load("configure_budget.html");
+                window.history.replaceState("", 'Dashboard', './dashboard.html');
+                document.title = 'Dashboard';
+                $(".homeContent").hide();
+                $(".dashboardContent").show();
+                $('.userDropdown').show();
+                document.getElementById("display_username").innerHTML = username;
+                localStorage.setItem('jwt', res.data.token);
+                $(".pieChart").load("pie.html");
+                $(".barChart").load("bar.html");
+                $(".lineChart").load("line.html");
+                $(".monthlyExpense").load("monthly_expense.html");
+                $(".configureBudget").load("configure_budget.html");
 
-                    var jwtTimeout = setTimeout(() => {
-                        jwtExpires();
-                    }, 60000
-                    )
+                var jwtTimeout = setTimeout(() => {
+                    jwtExpires();
+                }, 60000
+                )
 
-                    setTimeout(() => {
-                        sessionExpiration(jwtTimeout);
-                    }, 40000
-                    )
-                }
-                else {
+                setTimeout(() => {
+                    sessionExpiration(jwtTimeout);
+                }, 40000
+                )
+            }).catch((err) => {
+                status_code = err.response.status;
+
+                if (status_code == 401) {
                     alert("Incorrect Username or Password!!!");
                 }
-            }).catch((err) => { console.log('Axios Error:', err); })
+                else if (status_code == 500) {
+                    alert("Internal Server Error. Please Try Again!");
+                }
+
+            })
     };
 
 </script>

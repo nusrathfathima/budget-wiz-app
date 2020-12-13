@@ -5,7 +5,7 @@ const app = express();
 const cryptoJS = require("crypto");
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken'); 
+const jwt = require('jsonwebtoken');
 const exjwt = require('express-jwt');
 
 app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: true }));
@@ -13,7 +13,7 @@ app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: 
 var corsOptions = {
     origin: 'https://budget-wiz-app-temp-snef2.ondigitalocean.app/',
     optionsSuccessStatus: 200
-  }
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -39,20 +39,20 @@ app.post('/login', (req, res) => {
     const login_query = `SELECT * FROM user_accounts WHERE username='${username}' AND password='${encrptd_password}'`;
 
     connection.query(login_query, function (error, results, fields) {
-        login_status = false;
         if (error) {
-            // throw error;
-            console.log(error);
+            res.sendStatus(500);
         }
-        let token = null
-        if (results.length > 0) {
-            login_status = true;
-            token = jwt.sign({ id: results[0].id, username: results[0].username}, secretKey, {expiresIn: 60 });
+        else {
+            if (results.length == 0) {
+                res.sendStatus(401)
+            }
+            else {
+                let token = jwt.sign({ id: results[0].id, username: results[0].username }, secretKey, { expiresIn: 60 });
+                res.status(200).json({
+                    "token": token
+                });
+            }    
         }
-        res.json({
-            "login_status": login_status,
-            "token": token
-        });
     });
 })
 
@@ -71,7 +71,7 @@ app.post('/signup', (req, res) => {
         }
         let token = null
         if (signup_status) {
-            token = jwt.sign({ id: results.insertId, username: username}, secretKey, {expiresIn: 60 });
+            token = jwt.sign({ id: results.insertId, username: username }, secretKey, { expiresIn: 60 });
         }
 
         res.json({
@@ -148,9 +148,9 @@ app.post('/add_budget', (req, res) => {
             budget_exists = true;
         }
         if (!budget_exists) {
-            const months = ['January', 'February', 'March', 'April', 'May', 'June', 
-            'July', 'August', 'September', 'October', 'November', 'December'];
-            for (var i=0; i < months.length; i++) {
+            const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            for (var i = 0; i < months.length; i++) {
                 create_expenses_query = `INSERT INTO monthly_expenses(month, category, expense, username) VALUES ('${months[i]}', '${category}', '0', '${username}')`;
                 connection.query(create_expenses_query, function (error, results, fields) {
                     if (error) {
