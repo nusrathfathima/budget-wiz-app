@@ -8,7 +8,12 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken'); 
 const exjwt = require('express-jwt');
 
-app.use(cors());
+app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: true }));
+
+var corsOptions = {
+    origin: 'https://budget-wiz-app-temp-snef2.ondigitalocean.app/',
+    optionsSuccessStatus: 200
+  }
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
