@@ -153,29 +153,35 @@ class EyesContext {
     await this._parent.focus()
 
     if (this._reference && !this._element) {
-      this._logger.verbose(`Context initialization from reference - ${this._reference}`)
+      this._logger.verbose(`Context initialization from reference`)
 
       if (TypeUtils.isInteger(this._reference)) {
-        this._logger.verbose('Getting frames list...')
+        this._logger.verbose('Context init from index -', this._reference)
         const elements = await this._parent.elements('frame, iframe')
         if (this._reference > elements.length) {
           throw new TypeError(`Frame index [${this._reference}] is invalid!`)
         }
         this._element = elements[this._reference]
       } else if (TypeUtils.isString(this._reference) || this.spec.isSelector(this._reference)) {
+        const referenceStr = TypeUtils.isString(this._reference)
+          ? this._reference
+          : JSON.stringify(this._reference)
         this._logger.verbose('Getting frames by name or id or selector...')
         if (TypeUtils.isString(this._reference)) {
+          this._logger.verbose('Context init from string -', referenceStr)
           this._element = await this._parent
             .element(`iframe[name="${this._reference}"], iframe#${this._reference}`)
             .catch(() => null)
         }
         if (!this._element && this.spec.isSelector(this._reference)) {
+          this._logger.verbose('Context init from selector object -', referenceStr)
           this._element = await this._parent.element(this._reference)
         }
         if (!this._element) {
-          throw new TypeError(`No frame with selector, name or id '${this._reference}' exists!`)
+          throw new TypeError(`No frame with selector, name or id '${referenceStr}' exists!`)
         }
       } else if (this.constructor.isElement(this._reference)) {
+        this._logger.verbose('Context init from element')
         this._element = this.spec.newElement(this._logger, this._parent, {element: this._reference})
       } else {
         throw new TypeError('Reference type does not supported!')
