@@ -22,19 +22,29 @@
 
 <body hidden>
     <div class="appBanner">
-        <a class="appName">Budget Wiz</a>
+        <div class="appName">Budget Wiz</div>
         <div class="w3-dropdown-hover w3-right userDropdown">
             <button class="w3-button w3-#BCD2E8 userButton">
                 Welcome, <span id="display_username"></span>!
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="w3-dropdown-content w3-bar-block w3-border">
-                <a href="#" class="w3-bar-item w3-button">My Profile</a>
-                <a href="./configure_budget.html" class="w3-bar-item w3-button">Configure Budget</a>
                 <a onclick="logout()" class="w3-bar-item w3-button">Logout</a>
             </div>
         </div>
     </div>
+    <section class="menuBanner">
+        <div class="homeMenuBanner">
+            <button id="loginTab" class="defaultTab" onclick="showLoginForm()">Login</button>
+            <button id="signupTab" class="menuTab" onclick="showSignupForm()">Sign Up</button>
+        </div>
+        <div class="dashboardMenuBanner" hidden>
+            <button id="graphsTab" class="defaultTab" onclick="showGraphs()">Graphs</button>
+            <button id="budgetTab" class="menuTab" onclick="showBudgetTable()">Configure Budget</button>
+            <button id="expensesTab" class="menuTab" onclick="showExpensesTable()">Monthly Expenses</button>
+            <button id="darkModeToggle" class="menuTab" onclick="toggleDarkMode()">Dark Mode</button>
+        </div>
+    </section>
 
     <div id="sessionModal" class="sessionModal" hidden>
         <div class="sessionModal-content">
@@ -43,21 +53,28 @@
             <button id="cancelSession">Cancel</button>
         </div>
     </div>
+
     <div class="homeContent">
-        <div class="loginForm"></div>
-        <br>
-        <div class="signupForm"></div>
+        <div id="loginForm" class="loginForm"></div>
+        <div id="signupForm" class="signupForm" hidden></div>
     </div>
 
     <div class="dashboardContent">
-        <div class="pieChart"></div>
+        <section class="menuBanner">
+            <div class="graphsMenuBanner" hidden>
+                <button id="pieChartTab" class="defaultSubTab" onclick="showPie()">Categorical Budget</button>
+                <button id="lineChartTab" class="menuSubTab" onclick="showLine()">Categorical Expense</button>
+                <button id="barChartTab" class="menuSubTab" onclick="showBar()">Monthly Expense</button>    
+            </div>    
+        </section>
+        <div id="chartsSection">
+            <div class="pieChart"></div>
+            <div class="barChart"></div>
+            <div class="lineChart"></div>    
+        </div>
 
-        <div class="barChart"></div>
-        <div class="lineChart"></div>
-
-        <div class="monthlyExpense"></div>
-
-        <div class="configureBudget"></div>
+        <div id="budgetSection" class="configureBudget" hidden></div>
+        <div id="expensesSection" class="monthlyExpense" hidden></div>
     </div>
 
     <footer class="bottom">
@@ -70,28 +87,98 @@
         $(function () {
             $(".loginForm").load("login.html");
             $(".signupForm").load("signup.html");
-            // $(".pieChart").load("pie.html");
-            // $(".barChart").load("bar.html");
-            // $(".lineChart").load("line.html");
-            // $(".monthlyExpense").load("monthly_expense.html");
-            // $(".configureBudget").load("configure_budget.html");
         });
 
+        function showLoginForm() {
+            document.getElementById("loginTab").style = "background-color: #0b0b34";
+            document.getElementById("signupTab").style = "background-color: #3179c1";
+            $('#loginForm').show();
+            $('#signupForm').hide();
+        }
+
+        function showSignupForm() {
+            document.getElementById("signupTab").style = "background-color: #0b0b34";
+            document.getElementById("loginTab").style = "background-color: #3179c1";
+            $('#loginForm').hide();
+            $('#signupForm').show();
+        }
+
+        function showGraphs() {
+            document.getElementById("graphsTab").style = "background-color: #0b0b34";
+            document.getElementById("budgetTab").style = "background-color: #3179c1";
+            document.getElementById("expensesTab").style = "background-color: #3179c1";
+            $('.graphsMenuBanner').show();
+            $('#chartsSection').show();
+            $("#pieChartTab").click();
+            $('#budgetSection').hide();
+            $('#expensesSection').hide();
+        }
+
+        function showBudgetTable() {
+            document.getElementById("graphsTab").style = "background-color: #3179c1";
+            document.getElementById("budgetTab").style = "background-color: #0b0b34";
+            document.getElementById("expensesTab").style = "background-color: #3179c1";
+            $('.graphsMenuBanner').hide();
+            $('#chartsSection').hide();
+            $('#budgetSection').show();
+            $('#expensesSection').hide();
+        }
+
+        function showExpensesTable() {
+            document.getElementById("graphsTab").style = "background-color: #3179c1";
+            document.getElementById("budgetTab").style = "background-color: #3179c1";
+            document.getElementById("expensesTab").style = "background-color: #0b0b34";
+            $('.graphsMenuBanner').hide();
+            $('#chartsSection').hide();
+            $('#budgetSection').hide();
+            $('#expensesSection').show();
+        }
+
+        function showPie() {
+            document.getElementById("pieChartTab").style = "background-color: #083708";
+            document.getElementById("lineChartTab").style = "background-color: #086f08";
+            document.getElementById("barChartTab").style = "background-color: #086f08";
+            $('.pieChart').show();
+            $('.lineChart').hide();
+            $('.barChart').hide();
+        }
+
+        function showLine() {
+            document.getElementById("pieChartTab").style = "background-color: #086f08";
+            document.getElementById("lineChartTab").style = "background-color: #083708";
+            document.getElementById("barChartTab").style = "background-color: #086f08";
+            $('.pieChart').hide();
+            $('.lineChart').show();
+            $('.barChart').hide();
+        }
+
+        function showBar() {
+            document.getElementById("pieChartTab").style = "background-color: #086f08";
+            document.getElementById("lineChartTab").style = "background-color: #086f08";
+            document.getElementById("barChartTab").style = "background-color: #083708";
+            $('.pieChart').hide();
+            $('.lineChart').hide();
+            $('.barChart').show();
+        }
+
+        function toggleDarkMode() {
+
+        }
+
         function logout() {
-            // 
-            // 
-            // CLEAR BOTH EXPIRATION ALERT AND JWT EXPIRES TIMEOUTS AT LOGOUT!!!
-            // IF NOT, NEW USER WILL WITNESS THE OLD USERS' TIMEOUTS!!!
-            // ONE POSSIBLE SOLUTION IS TO SET AN EXPIRATION FOR TOKENS AND REFRESH TOKEN WHEN
-            // EXTEND SESSION BUTTON IS CLICKED.
-            // 
-            // 
+            var id = window.setTimeout(function () { }, 0);
+            while (id--) {
+                window.clearTimeout(id);
+            }
+
             localStorage.removeItem('jwt');
             window.history.replaceState("", 'Home', './index.html');
             document.title = 'Home';
             $('.homeContent').show();
             $('.dashboardContent').hide();
             $('.userDropdown').hide();
+            $(".homeMenuBanner").show();
+            $(".dashboardMenuBanner").hide();
         };
 
 
@@ -99,6 +186,7 @@
             try {
                 return JSON.parse(atob(token.split('.')[1]));
             } catch (e) {
+                console.log(e);
                 return null;
             }
         };
@@ -151,3 +239,4 @@
         }
     </script>
 </body>
+</html>

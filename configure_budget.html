@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h1 id="heading">Configure Budget</h1>
+    <!-- <h1 id="heading">Configure Budget</h1> -->
     <form>
         <div>
             <table id="budgetTable">
@@ -24,7 +24,7 @@
         <br>
         <button type="button" onclick="update_budget(this.form)">Update</button>
     </form>
-    <h2 id="heading">Add New Budget</h2>
+    <!-- <h2 id="heading">Add New Budget</h2> -->
     <form>
         <div class="addBudget">
             <input id="category" type="text" placeholder="Enter Category" name="category">
@@ -48,7 +48,7 @@
                     'Authorization': `Bearer ${token}`
                 }
             }
-            axios.get('http://142.93.1.183:3000/get_budgets', data)
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -105,10 +105,17 @@
                 }
                 document.getElementById("category").value = "";
                 document.getElementById("budget").value = "";
-                axios.post('http://142.93.1.183:3000/add_budget', data)
+                axios.post('http://localhost:3000/add_budget', data)
                     .then(function (res) {
-                        document.getElementById("budgetTable").innerHTML += "<tr><td>" + category + "</td><td>" + budget + "</td></tr>";
+                        document.getElementById("budgetTable").innerHTML += "<tr><td>" + category + "</td>" + 
+                            "<td>" + 
+                                "<input type='number' placeholder='Enter Budget' name='" + category + "' value=" + budget + ">" + 
+                            "</td></tr>";
                         alert("Successfully Added Budget Category");
+                        drawPie();
+                        drawBar();
+                        drawLine();
+
                     }).catch((err) => {
                         try {
                             status_code = err.response.status;
@@ -149,7 +156,7 @@
                 }
             }
 
-            axios.get('http://142.93.1.183:3000/get_budgets', data)
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -166,9 +173,12 @@
                         'budget_array': budget_array,
                         'username': username
                     }
-                    axios.post('http://142.93.1.183:3000/update_budgets', post_data)
+                    axios.post('http://localhost:3000/update_budgets', post_data)
                         .then(res => {
-                            console.log(res);
+                            alert("Successfully Updated Budgets");
+                            drawPie();
+                            drawBar();
+                            drawLine();                            
                         }).catch((err) => {
                             try {
                                 status_code = err.response.status;
@@ -197,17 +207,6 @@
                 });
 
         };
-
-        // function delete_budget(category, budget) {
-        //     const data = {
-        //         "category" : category,
-        //         "budget" : budget
-        //     }
-        //     axios.post('http://142.93.1.183:3000/delete_budget', data)
-        //         .then(res => {
-        //             console.log(res);
-        //         });
-        // };
 
     </script>
 

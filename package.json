@@ -20,7 +20,7 @@
     "jest": "^26.6.3"
   },
   "scripts": {
-    "test": "jest --forceExit unit.test.js ; testcafe --skip-js-errors chrome e2e.test.js -s screenshots ; testcafe --skip-js-errors chrome:headless applitools.test.js",
+    "test": "jest --forceExit unit.test.js & testcafe --skip-js-errors chrome e2e.test.js -s screenshots & testcafe --skip-js-errors chrome:headless applitools.test.js",
     "start": "node server.js"
   },
   "repository": {

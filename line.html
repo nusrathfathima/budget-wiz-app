@@ -124,8 +124,9 @@
 					'Authorization': `Bearer ${token}`
 				}
 			}
-			axios.get('http://142.93.1.183:3000/get_budgets', data)
+			axios.get('http://localhost:3000/get_budgets', data)
 				.then(function (res) {
+					document.getElementById("categories").innerHTML = "<option id=0 value='Select Category'>Select Category</option>"
 					for (var i = 0; i < res.data.configured_budget.length; i++) {
 						var category = res.data.configured_budget[i].category;
 						document.getElementById("categories").innerHTML +=
@@ -160,14 +161,14 @@
 					'Authorization': `Bearer ${token}`
 				}
 			}
-			axios.get('http://142.93.1.183:3000/get_budgets', data)
+			axios.get('http://localhost:3000/get_budgets', data)
 				.then(function (res) {
 					lineChartData.datasets[0].data = [];
 					lineChartData.datasets[1].data = [];
 					var category = m[m.selectedIndex].value;
 					var id = parseInt(m[m.selectedIndex].id) - 1;
 
-					axios.get('http://142.93.1.183:3000/get_expenses', data)
+					axios.get('http://localhost:3000/get_expenses', data)
 						.then(function (res_expenses) {
 							if (id >= 0) {
 								var budget = res.data.configured_budget[id].budget;
@@ -182,6 +183,7 @@
 										expense = res_expenses.data.monthly_expenses[month][id].expense;
 									}
 									catch (err) {
+										console.log(err);
 									}
 									lineChartData.datasets[0].data.push(budget);
 									lineChartData.datasets[1].data.push(expense);

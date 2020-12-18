@@ -13,7 +13,7 @@ function login(user) {
         'password': password
     };
 
-    axios.post('http://142.93.1.183:3000/login', data)
+    axios.post('http://localhost:3000/login', data)
         .then(function (res) {
 
             // document.getElementById("login_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"
@@ -22,17 +22,23 @@ function login(user) {
             document.getElementById("password").value = "";
 
             window.history.replaceState("", 'Dashboard', './dashboard.html');
+            document.getElementById("display_username").innerHTML = username;
+            localStorage.setItem('jwt', res.data.token);
             document.title = 'Dashboard';
+
             $(".homeContent").hide();
             $(".dashboardContent").show();
             $('.userDropdown').show();
-            document.getElementById("display_username").innerHTML = username;
-            localStorage.setItem('jwt', res.data.token);
+            $(".homeMenuBanner").hide();
+            $(".dashboardMenuBanner").show();
+
             $(".pieChart").load("pie.html");
             $(".barChart").load("bar.html");
             $(".lineChart").load("line.html");
             $(".monthlyExpense").load("monthly_expense.html");
             $(".configureBudget").load("configure_budget.html");
+
+            $("#graphsTab").click();
 
             var jwtTimeout = setTimeout(() => {
                 jwtExpires();

@@ -7,14 +7,15 @@
     font-size: 30px;
     font-weight: bold;
     color: white;
-    height: 40px;
-    padding: 40px;
-    /* text-align: left; */
+    padding: 0 10px;
     text-size-adjust: 50px;
+    display: inline-block;
+    cursor: pointer;
 }
 
 .userDropdown {
-    background-color: #BCD2E8 ;
+    background-color: #BCD2E8;
+    display: inline-block;
 }
 
 .userButton {
@@ -23,12 +24,59 @@
     height: 50px;
 }
 
-.barChart, .lineChart {
-    width: 50%;
-    display: inline-block;
+.menuBanner {
+    /* background-color: #3179c1; */
+    /* height: 35px; */
+    white-space: nowrap;
 }
 
-.pieChart {
+.defaultTab, .menuTab, .defaultSubTab, .menuSubTab {
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 0;
+    font-size: 20px;
+}
+
+.defaultTab:hover, .menuTab:hover, .defaultSubTab:hover, .menuSubTab:hover {
+    opacity: 0.8;
+}
+
+#loginTab, #signupTab {
+    width: 50%;
+}
+
+#graphsTab, #budgetTab, #expensesTab {
+    width: 30%
+}
+
+#darkModeToggle {
+    width: 10%
+}
+
+#pieChartTab, #lineChartTab, #barChartTab {
+    width: 33.33%
+}
+
+.defaultTab {
+    background-color: #0b0b34;
+}
+
+.menuTab {
+    background-color: #3179c1;
+}
+
+.defaultSubTab {
+    background-color: #083708;
+}
+
+.menuSubTab {
+    background-color: #086f08;
+}
+
+.barChart, .pieChart {
     align-items: center;
     width: 70%; 
     margin: 0 auto;
@@ -49,6 +97,7 @@
 form {
     border: 3px solid #f1f1f1;
     background-color: #BCD2E8;
+    height: 100%;
 }
 
 input {
@@ -78,7 +127,7 @@ button {
     background-color: #2E5984;
     color: white;
     padding: 14px 20px;
-    margin: 8px 0;
+    /* margin: 8px 0; */
     border: none;
     cursor: pointer;
     /* width: 40%; */
@@ -112,6 +161,7 @@ td {
 }
 
 #heading {
+    margin: 100px;
     background-color: #2E5984; 
     color: white;
 }

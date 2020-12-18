@@ -23,10 +23,6 @@ var connection = mysql.createConnection({
 })
 
 const secretKey = 'My super secret key';
-const jwtMW = exjwt({
-    secret: secretKey,
-    algorithms: ['HS256']
-});
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -37,20 +33,21 @@ app.post('/login', (req, res) => {
 
     connection.query(login_query, function (error, results, fields) {
         if (error) {
-            res.status(500);
+            console.log(error);
+            res.status(500).json();
         }
         else {
             if (results.length == 0) {
-                res.status(401);
+                console.log(error);
+                res.status(401).json();
             }
             else {
-                let token = jwt.sign({ id: results[0].id, username: results[0].username }, secretKey);
+                let token = jwt.sign({ id: results[0].id, username: results[0].username }, secretKey, {expiresIn: 60});
                 res.status(200).json({
                     "token": token
                 });
             }
         }
-        res.json();
     });
 })
 
@@ -64,24 +61,25 @@ app.post('/signup', (req, res) => {
     connection.query(signup_query, function (error, results, fields) {
         if (error) {
             if (error.code == 'ER_DUP_ENTRY') {
-                res.status(409);
+                console.log(error);
+                res.status(409).json();
             }
             else {
-                res.status(500);
+                console.log(error);
+                res.status(500).json();
             }
         }
         else {
-            let token = jwt.sign({ id: results.insertId, username: username }, secretKey);
+            let token = jwt.sign({ id: results.insertId, username: username }, secretKey, {expiresIn: 60});
             res.status(200).json({
                 "token": token
             });
         }
-        res.json();
     });
 })
 
 
-app.get('/get_budgets', jwtMW, (req, res) => {
+app.get('/get_budgets', (req, res) => {
     var configured_budget = [];
 
     const username = req.query.username;
@@ -89,7 +87,8 @@ app.get('/get_budgets', jwtMW, (req, res) => {
 
     connection.query(budget_query, function (error, results, fields) {
         if (error) {
-            res.status(500);
+            console.log(error);
+            res.status(500).json();
         }
         else {
             for (var i = 0; i < results.length; i++) {
@@ -103,11 +102,10 @@ app.get('/get_budgets', jwtMW, (req, res) => {
                 "configured_budget": configured_budget
             });
         }
-        res.json();
     });
 });
 
-app.get('/get_expenses', jwtMW, (req, res) => {
+app.get('/get_expenses', (req, res) => {
     var monthly_expenses = {};
 
     const username = req.query.username;
@@ -115,7 +113,8 @@ app.get('/get_expenses', jwtMW, (req, res) => {
 
     connection.query(expense_query, function (error, results, fields) {
         if (error) {
-            res.status(500);
+            console.log(error);
+            res.status(500).json();
         }
         else {
             for (var i = 0; i < results.length; i++) {
@@ -135,7 +134,6 @@ app.get('/get_expenses', jwtMW, (req, res) => {
                 "monthly_expenses": monthly_expenses
             });
         }
-        res.json();
     });
 });
 
@@ -147,10 +145,12 @@ app.post('/add_budget', (req, res) => {
     connection.query(add_budget_query, function (error, results, fields) {
         if (error) {
             if (error.code == 'ER_DUP_ENTRY') {
-                res.status(409);
+                console.log(error);
+                res.status(409).json();
             }
             else {
-                res.status(500);
+                console.log(error);
+                res.status(500).json();
             }
         }
         else {
@@ -160,15 +160,15 @@ app.post('/add_budget', (req, res) => {
                 create_expenses_query = `INSERT INTO monthly_expenses(month, category, expense, username) VALUES ('${months[i]}', '${category}', '0', '${username}')`;
                 connection.query(create_expenses_query, function (error, results, fields) {
                     if (error) {
-                        res.status(500);
+                        console.log(error);
+                        res.status(500).json();
                     }
                     else {
-                        res.status(200);
+                        res.status(200).json();
                     }
                 });
             }
         }
-        res.json();
     });
 })
 
@@ -179,14 +179,14 @@ app.post('/update_budgets', (req, res) => {
         update_budgets_query = `UPDATE configured_budget SET budget='${budget_array[i].budget}', color='${budget_array[i].color}' WHERE category='${budget_array[i].category}' AND username='${username}'`;
         connection.query(update_budgets_query, function (error, results, fields) {
             if (error) {
-                res.status(500);
+                console.log(error);
+                res.status(500).json();
             }
             else {
-                res.status(200);
+                res.status(200).json();
             }
         });
     }
-    res.json();
 })
 
 app.post('/add_expenses', (req, res) => {
@@ -196,14 +196,14 @@ app.post('/add_expenses', (req, res) => {
         add_expenses_query = `UPDATE monthly_expenses SET expense='${expense_array[i].expense}' WHERE category='${expense_array[i].category}' AND month='${month}' AND username='${username}'`;
         connection.query(add_expenses_query, function (error, results, fields) {
             if (error) {
-                res.status(500);
+                console.log(error);
+                res.status(500).json();
             }
             else {
-                res.status(200);
+                res.status(200).json();
             }
         });
     }
-    res.json();
 })
 
 app.listen(port, () => {

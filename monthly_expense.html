@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h1 id="heading">Monthly Expense</h1>
+    <!-- <h1 id="heading">Monthly Expense</h1> -->
     <form>
         <div>
             <label for="months">Select Month:</label>
@@ -62,7 +62,7 @@
                     'Authorization': `Bearer ${token}`
                 }
             }
-            axios.get('http://142.93.1.183:3000/get_budgets', data)
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -113,7 +113,7 @@
                 }
             }
 
-            axios.get('http://142.93.1.183:3000/get_budgets', data)
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -130,9 +130,9 @@
                         'expense_array': expense_array,
                         'username': username
                     }
-                    axios.post('http://142.93.1.183:3000/add_expenses', data)
+                    axios.post('http://localhost:3000/add_expenses', data)
                         .then(res => {
-                            console.log(res);
+                            alert("Successfully Updated Expenses");
                         }).catch((err) => {
                             try {
                                 status_code = err.response.status;
@@ -171,7 +171,7 @@
                     'Authorization': `Bearer ${token}`
                 }
             }
-            axios.get('http://142.93.1.183:3000/get_budgets', data)
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
                     var month = m[m.selectedIndex].value;
                     var month_id = m[m.selectedIndex].id;
@@ -181,18 +181,22 @@
                     else {
                         document.getElementById("expenseTable").hidden = true;
                     }
-                    axios.get('http://142.93.1.183:3000/get_expenses', data)
+                    axios.get('http://localhost:3000/get_expenses', data)
                         .then(function (res_expenses) {
                             for (var i = 0; i < res.data.configured_budget.length; i++) {
                                 var category = res.data.configured_budget[i].category;
                                 var expense = null;
                                 try {
-                                    expense = res_expenses.data.monthly_expenses[month][i].expense;
+                                    expense_value = res_expenses.data.monthly_expenses[month][i].expense;
+                                    if (expense_value > 0) {
+                                        expense = expense_value
+                                    }
                                 }
                                 catch (err) {
+                                    console.log(err);
                                 }
 
-                                document.getElementsByName(category)[0].value = expense;
+                                document.getElementById("expense_"+category).value = expense;
                             }
                         }).catch((err) => {
                             try {

@@ -9,7 +9,7 @@
 <body>
     <div>
         <h1 id="chartTitle">Categorical Budget</h1>
-        <p>
+        <p id="pieChart">
             <canvas id="myChart"></canvas>
         </p>
     </div>
@@ -31,13 +31,22 @@
             ],
             labels: []
         };
-        function createPieChart() {
-            var ctx = document.getElementById("myChart").getContext("2d");
 
-            var myPieChart = new Chart(ctx, {
-                type: 'pie',
-                data: dataSource
-            });
+        var pieChart;
+        function createPieChart() {
+			if (pieChart) {
+				pieChart.destroy();
+			}
+            if (dataSource.labels.length > 0) {
+                var ctx = document.getElementById("myChart").getContext("2d");
+                pieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: dataSource
+                });
+            }
+            else {
+                document.getElementById('pieChart').innerHTML = "<p style='font-size: 20px; color: red; text-align: center;'>To view Pie Chart based on Categorical Budgets, please add budgets in Configure Budget tab.</p>"
+            }
         }
         function drawPie() {
             const token = localStorage.getItem('jwt');
@@ -49,8 +58,11 @@
                     'Authorization': `Bearer ${token}`
                 }
             }
-            axios.get('http://142.93.1.183:3000/get_budgets', data)
+            axios.get('http://localhost:3000/get_budgets', data)
                 .then(function (res) {
+                    dataSource.labels = []
+                    dataSource.datasets[0].data = []
+                    dataSource.datasets[0].backgroundColor = []
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
                         var budget = res.data.configured_budget[i].budget;
