@@ -31,15 +31,9 @@
         <div>
             <table id="expenseTable" hidden>
                 <tr>
-                    <th>
-                        Category
-                    </th>
-                    <th>
-                        Budget
-                    </th>
-                    <th>
-                        Expense
-                    </th>
+                    <th>Category</th>
+                    <th>Budget</th>
+                    <th>Expense</th>
                 </tr>
             </table>
         </div>
@@ -162,6 +156,9 @@
         }
 
         function load_expenses(m) {
+            document.getElementById("expenseTable").innerHTML = "<tr><th>Category</th><th>Budget</th><th>Expense</th></tr>";
+            get_expenses();
+            
             const token = localStorage.getItem('jwt');
             const data = {
                 params: {
