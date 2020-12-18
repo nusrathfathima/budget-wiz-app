@@ -13,7 +13,7 @@ function login(user) {
         'password': password
     };
 
-    axios.post('http://localhost:3000/login', data)
+    axios.post('http://142.93.1.183:3000/login', data)
         .then(function (res) {
 
             // document.getElementById("login_message").innerHTML = "<div class=\"alert alert-success\"><strong>Success!</strong> Login Successful.</div>"

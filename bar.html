@@ -111,7 +111,7 @@
 					'Authorization': `Bearer ${token}`
 				}
 			}
-			axios.get('http://localhost:3000/get_budgets', data)
+			axios.get('http://142.93.1.183:3000/get_budgets', data)
 				.then(function (res) {
 					barChartData.labels = []
 					for (var i = 0; i < res.data.configured_budget.length; i++) {
@@ -148,12 +148,12 @@
 					'Authorization': `Bearer ${token}`
 				}
 			}
-			axios.get('http://localhost:3000/get_budgets', data)
+			axios.get('http://142.93.1.183:3000/get_budgets', data)
 				.then(function (res) {
 					var month = m[m.selectedIndex].value;
 					barChartData.datasets[0].data = [];
 					barChartData.datasets[1].data = [];
-					axios.get('http://localhost:3000/get_expenses', data)
+					axios.get('http://142.93.1.183:3000/get_expenses', data)
 						.then(function (res_expenses) {
 							for (var i = 0; i < res.data.configured_budget.length; i++) {
 								var category = res.data.configured_budget[i].category;

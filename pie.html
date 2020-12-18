@@ -58,7 +58,7 @@
                     'Authorization': `Bearer ${token}`
                 }
             }
-            axios.get('http://localhost:3000/get_budgets', data)
+            axios.get('http://142.93.1.183:3000/get_budgets', data)
                 .then(function (res) {
                     dataSource.labels = []
                     dataSource.datasets[0].data = []

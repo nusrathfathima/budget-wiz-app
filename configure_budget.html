@@ -48,7 +48,7 @@
                     'Authorization': `Bearer ${token}`
                 }
             }
-            axios.get('http://localhost:3000/get_budgets', data)
+            axios.get('http://142.93.1.183:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -105,7 +105,7 @@
                 }
                 document.getElementById("category").value = "";
                 document.getElementById("budget").value = "";
-                axios.post('http://localhost:3000/add_budget', data)
+                axios.post('http://142.93.1.183:3000/add_budget', data)
                     .then(function (res) {
                         document.getElementById("budgetTable").innerHTML += "<tr><td>" + category + "</td>" + 
                             "<td>" + 
@@ -156,7 +156,7 @@
                 }
             }
 
-            axios.get('http://localhost:3000/get_budgets', data)
+            axios.get('http://142.93.1.183:3000/get_budgets', data)
                 .then(function (res) {
                     for (var i = 0; i < res.data.configured_budget.length; i++) {
                         var category = res.data.configured_budget[i].category;
@@ -173,7 +173,7 @@
                         'budget_array': budget_array,
                         'username': username
                     }
-                    axios.post('http://localhost:3000/update_budgets', post_data)
+                    axios.post('http://142.93.1.183:3000/update_budgets', post_data)
                         .then(res => {
                             alert("Successfully Updated Budgets");
                             drawPie();
