@@ -1,5 +1,5 @@
 module.exports = {
-    apiKey: 'cIreb91ZBJ2tZ4DAbp09Yh3UlpUoh0LW6NWSWGAWmHM110',
+    apiKey: '17wVCVEAlxBzWXhIBbzbzeUox4LBJAR980100W6eIJ93qE110',
     //
     browser: [
         // Add browsers with different viewports
