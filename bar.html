@@ -7,29 +7,26 @@
 
 <body>
 	<h1 id="chartTitle">Monthly Expense</h1>
-	<div>
-		<label for="months">Select Month:</label>
-		<select id="months" name="months" onchange="load_bar_expenses(this)" autocomplete="off">
-			<option id=0 value="Select Month">Select Month</option>
-			<option id=1 value="January">January</option>
-			<option id=2 value="February">February</option>
-			<option id=3 value="March">March</option>
-			<option id=4 value="April">April</option>
-			<option id=5 value="May">May</option>
-			<option id=6 value="June">June</option>
-			<option id=7 value="July">July</option>
-			<option id=8 value="August">August</option>
-			<option id=9 value="September">September</option>
-			<option id=10 value="October">October</option>
-			<option id=11 value="November">November</option>
-			<option id=12 value="December">December</option>
-		</select>
-	</div>
-	<br>
+	<label for="months">Select Month:</label>
+	<select id="months" name="months" onchange="load_bar_expenses(this)" autocomplete="off">
+		<option id=0 value="Select Month">Select Month</option>
+		<option id=1 value="January">January</option>
+		<option id=2 value="February">February</option>
+		<option id=3 value="March">March</option>
+		<option id=4 value="April">April</option>
+		<option id=5 value="May">May</option>
+		<option id=6 value="June">June</option>
+		<option id=7 value="July">July</option>
+		<option id=8 value="August">August</option>
+		<option id=9 value="September">September</option>
+		<option id=10 value="October">October</option>
+		<option id=11 value="November">November</option>
+		<option id=12 value="December">December</option>
+	</select>
 
-	<div id="container">
+	<header id="container">
 		<canvas id="myBarChart"></canvas>
-	</div>
+	</header>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
 		integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="

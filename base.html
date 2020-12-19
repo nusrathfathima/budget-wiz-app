@@ -34,9 +34,10 @@
                         Welcome, <span id="display_username"></span>!
                         <i class="fa fa-caret-down"></i>
                     </button>
-                    <div class="w3-dropdown-content w3-bar-block w3-border">
+                    <!-- This is an A11y change -->
+                    <nav class="w3-dropdown-content w3-bar-block w3-border">
                         <a onclick="logout()" class="w3-bar-item w3-button">Logout</a>
-                    </div>
+                    </nav>
                 </div>
             </main>
         </article>
