@@ -7,10 +7,11 @@
 </head>
 
 <body>
-    <!-- <h1 id="heading">Configure Budget</h1> -->
     <form>
         <div>
             <table id="budgetTable">
+                <!-- This is an A11y change -->
+                <caption>Configure Budget</caption>
                 <tr>
                     <th>
                         Category
@@ -24,7 +25,6 @@
         <br>
         <button type="button" onclick="update_budget(this.form)">Update</button>
     </form>
-    <!-- <h2 id="heading">Add New Budget</h2> -->
     <form>
         <div class="addBudget">
             <input id="category" type="text" placeholder="Enter Category" name="category">
@@ -107,9 +107,9 @@
                 document.getElementById("budget").value = "";
                 axios.post('http://142.93.1.183:3000/add_budget', data)
                     .then(function (res) {
-                        document.getElementById("budgetTable").innerHTML += "<tr><td>" + category + "</td>" + 
-                            "<td>" + 
-                                "<input type='number' placeholder='Enter Budget' name='" + category + "' value=" + budget + ">" + 
+                        document.getElementById("budgetTable").innerHTML += "<tr><td>" + category + "</td>" +
+                            "<td>" +
+                            "<input type='number' placeholder='Enter Budget' name='" + category + "' value=" + budget + ">" +
                             "</td></tr>";
                         alert("Successfully Added Budget Category");
                         drawPie();
@@ -178,7 +178,7 @@
                             alert("Successfully Updated Budgets");
                             drawPie();
                             drawBar();
-                            drawLine();                            
+                            drawLine();
                         }).catch((err) => {
                             try {
                                 status_code = err.response.status;

@@ -13,6 +13,47 @@
     cursor: pointer;
 }
 
+main#main h1 {
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    /* width: 500px; */
+    /* padding: 0 300px; */
+}
+
+a.skip-main {
+    left:-999px;
+    position:absolute;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    z-index:-999;
+}
+a.skip-main:focus, a.skip-main:active {
+    color: #fff;
+    background-color:#c3c5d0;
+    left: auto;
+    top: auto;
+    width: 30%;
+    height: auto;
+    overflow:auto;
+    margin: 5px 35%;
+    padding:5px;
+    border-radius: 15px;
+    border:4px solid rgb(123, 255, 0);
+    text-align:center;
+    font-size:1.2em;
+    z-index:999;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
 .userDropdown {
     background-color: #BCD2E8;
     display: inline-block;
@@ -20,12 +61,12 @@
 
 .userButton {
     font-weight: bold;
-    color: goldenrod;    
+    color: salmon;    
     height: 50px;
 }
 
 .menuBanner {
-    /* background-color: #3179c1; */
+    /* background-color: #67A3D9; */
     /* height: 35px; */
     white-space: nowrap;
 }
@@ -52,28 +93,29 @@
     width: 30%
 }
 
-#darkModeToggle {
+#darkModeButton {
+    background-color: #0671B7;
     width: 10%
 }
 
 #pieChartTab, #lineChartTab, #barChartTab {
-    width: 33.33%
+    width: 33.334%
 }
 
 .defaultTab {
-    background-color: #0b0b34;
+    background-color: #0671B7;
 }
 
 .menuTab {
-    background-color: #3179c1;
+    background-color: #67A3D9;
 }
 
 .defaultSubTab {
-    background-color: #083708;
+    background-color: #fd788b;
 }
 
 .menuSubTab {
-    background-color: #086f08;
+    background-color: #febecc;
 }
 
 .barChart, .pieChart {
@@ -156,7 +198,7 @@ table, th, td {
     border-collapse: collapse;
 }
 
-td {
+th, td {
     text-align: center;
 }
 
@@ -195,4 +237,11 @@ td {
     padding: 20px;
     border: 1px solid #888;
     width: 80%; 
+}
+
+caption {
+    font-size: 30px;
+    font-weight: bold;
+    /* color: white */
+    text-align: center;
 }

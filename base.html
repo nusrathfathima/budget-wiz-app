@@ -21,29 +21,40 @@
 </head>
 
 <body hidden>
-    <div class="appBanner">
-        <div class="appName">Budget Wiz</div>
-        <div class="w3-dropdown-hover w3-right userDropdown">
-            <button class="w3-button w3-#BCD2E8 userButton">
-                Welcome, <span id="display_username"></span>!
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="w3-dropdown-content w3-bar-block w3-border">
-                <a onclick="logout()" class="w3-bar-item w3-button">Logout</a>
-            </div>
-        </div>
-    </div>
+    <!-- This is an A11y change -->
+    <a class="skip-main" href="#main">Skip to Main</a>
+    <header>
+        <!-- This is an A11y change -->
+        <article class="appBanner">
+            <!-- This is an A11y change -->
+            <main id="main" title="Budget Wiz">
+                <h1>Budget Wiz</h1>
+                <div class="w3-dropdown-hover w3-right userDropdown">
+                    <button class="w3-button w3-#BCD2E8 userButton">
+                        Welcome, <span id="display_username"></span>!
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="w3-dropdown-content w3-bar-block w3-border">
+                        <a onclick="logout()" class="w3-bar-item w3-button">Logout</a>
+                    </div>
+                </div>
+            </main>
+        </article>
+    </header>
+    <!-- This is an A11y change -->
     <section class="menuBanner">
-        <div class="homeMenuBanner">
+        <!-- This is an A11y change -->
+        <nav class="homeMenuBanner">
             <button id="loginTab" class="defaultTab" onclick="showLoginForm()">Login</button>
             <button id="signupTab" class="menuTab" onclick="showSignupForm()">Sign Up</button>
-        </div>
-        <div class="dashboardMenuBanner" hidden>
+        </nav>
+        <nav class="dashboardMenuBanner" hidden>
             <button id="graphsTab" class="defaultTab" onclick="showGraphs()">Graphs</button>
             <button id="budgetTab" class="menuTab" onclick="showBudgetTable()">Configure Budget</button>
             <button id="expensesTab" class="menuTab" onclick="showExpensesTable()">Monthly Expenses</button>
-            <button id="darkModeToggle" class="menuTab" onclick="toggleDarkMode()">Dark Mode</button>
-        </div>
+            <!-- This is an A11y change -->
+            <button id="darkModeButton" class="menuTab" onclick="toggleDarkMode()">Dark Mode</button>
+        </nav>
     </section>
 
     <div id="sessionModal" class="sessionModal" hidden>
@@ -64,20 +75,21 @@
             <div class="graphsMenuBanner" hidden>
                 <button id="pieChartTab" class="defaultSubTab" onclick="showPie()">Categorical Budget</button>
                 <button id="lineChartTab" class="menuSubTab" onclick="showLine()">Categorical Expense</button>
-                <button id="barChartTab" class="menuSubTab" onclick="showBar()">Monthly Expense</button>    
-            </div>    
+                <button id="barChartTab" class="menuSubTab" onclick="showBar()">Monthly Expense</button>
+            </div>
         </section>
         <div id="chartsSection">
             <div class="pieChart"></div>
             <div class="barChart"></div>
-            <div class="lineChart"></div>    
+            <div class="lineChart"></div>
         </div>
 
         <div id="budgetSection" class="configureBudget" hidden></div>
         <div id="expensesSection" class="monthlyExpense" hidden></div>
     </div>
 
-    <footer class="bottom">
+    <!-- This is an A11y change -->
+    <footer id="bottom" class="bottom">
         <section class="center">
             All rights reserved &copy; Nusrath Fathima
         </section>
@@ -90,23 +102,23 @@
         });
 
         function showLoginForm() {
-            document.getElementById("loginTab").style = "background-color: #0b0b34";
-            document.getElementById("signupTab").style = "background-color: #3179c1";
+            document.getElementById("loginTab").style = "background-color: #0671B7";
+            document.getElementById("signupTab").style = "background-color: #67A3D9";
             $('#loginForm').show();
             $('#signupForm').hide();
         }
 
         function showSignupForm() {
-            document.getElementById("signupTab").style = "background-color: #0b0b34";
-            document.getElementById("loginTab").style = "background-color: #3179c1";
+            document.getElementById("signupTab").style = "background-color: #0671B7";
+            document.getElementById("loginTab").style = "background-color: #67A3D9";
             $('#loginForm').hide();
             $('#signupForm').show();
         }
 
         function showGraphs() {
-            document.getElementById("graphsTab").style = "background-color: #0b0b34";
-            document.getElementById("budgetTab").style = "background-color: #3179c1";
-            document.getElementById("expensesTab").style = "background-color: #3179c1";
+            document.getElementById("graphsTab").style = "background-color: #0671B7";
+            document.getElementById("budgetTab").style = "background-color: #67A3D9";
+            document.getElementById("expensesTab").style = "background-color: #67A3D9";
             $('.graphsMenuBanner').show();
             $('#chartsSection').show();
             $("#pieChartTab").click();
@@ -115,9 +127,9 @@
         }
 
         function showBudgetTable() {
-            document.getElementById("graphsTab").style = "background-color: #3179c1";
-            document.getElementById("budgetTab").style = "background-color: #0b0b34";
-            document.getElementById("expensesTab").style = "background-color: #3179c1";
+            document.getElementById("graphsTab").style = "background-color: #67A3D9";
+            document.getElementById("budgetTab").style = "background-color: #0671B7";
+            document.getElementById("expensesTab").style = "background-color: #67A3D9";
             $('.graphsMenuBanner').hide();
             $('#chartsSection').hide();
             $('#budgetSection').show();
@@ -125,9 +137,9 @@
         }
 
         function showExpensesTable() {
-            document.getElementById("graphsTab").style = "background-color: #3179c1";
-            document.getElementById("budgetTab").style = "background-color: #3179c1";
-            document.getElementById("expensesTab").style = "background-color: #0b0b34";
+            document.getElementById("graphsTab").style = "background-color: #67A3D9";
+            document.getElementById("budgetTab").style = "background-color: #67A3D9";
+            document.getElementById("expensesTab").style = "background-color: #0671B7";
             $('.graphsMenuBanner').hide();
             $('#chartsSection').hide();
             $('#budgetSection').hide();
@@ -135,34 +147,36 @@
         }
 
         function showPie() {
-            document.getElementById("pieChartTab").style = "background-color: #083708";
-            document.getElementById("lineChartTab").style = "background-color: #086f08";
-            document.getElementById("barChartTab").style = "background-color: #086f08";
+            document.getElementById("pieChartTab").style = "background-color: #fd788b";
+            document.getElementById("lineChartTab").style = "background-color: #febecc";
+            document.getElementById("barChartTab").style = "background-color: #febecc";
             $('.pieChart').show();
             $('.lineChart').hide();
             $('.barChart').hide();
         }
 
         function showLine() {
-            document.getElementById("pieChartTab").style = "background-color: #086f08";
-            document.getElementById("lineChartTab").style = "background-color: #083708";
-            document.getElementById("barChartTab").style = "background-color: #086f08";
+            document.getElementById("pieChartTab").style = "background-color: #febecc";
+            document.getElementById("lineChartTab").style = "background-color: #fd788b";
+            document.getElementById("barChartTab").style = "background-color: #febecc";
             $('.pieChart').hide();
             $('.lineChart').show();
             $('.barChart').hide();
         }
 
         function showBar() {
-            document.getElementById("pieChartTab").style = "background-color: #086f08";
-            document.getElementById("lineChartTab").style = "background-color: #086f08";
-            document.getElementById("barChartTab").style = "background-color: #083708";
+            document.getElementById("pieChartTab").style = "background-color: #febecc";
+            document.getElementById("lineChartTab").style = "background-color: #febecc";
+            document.getElementById("barChartTab").style = "background-color: #fd788b";
             $('.pieChart').hide();
             $('.lineChart').hide();
             $('.barChart').show();
         }
 
+        // This is an A11y change
         function toggleDarkMode() {
-
+            var element = document.body;
+            element.classList.toggle("dark-mode");
         }
 
         function logout() {
@@ -239,4 +253,5 @@
         }
     </script>
 </body>
+
 </html>
