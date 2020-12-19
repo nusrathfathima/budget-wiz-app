@@ -38,6 +38,7 @@
 				pieChart.destroy();
 			}
             if (dataSource.labels.length > 0) {
+                document.getElementById('pieChart').innerHTML = "<canvas id='myChart'></canvas>"
                 var ctx = document.getElementById("myChart").getContext("2d");
                 pieChart = new Chart(ctx, {
                     type: 'pie',
